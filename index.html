@@ -454,6 +454,62 @@
         .blood-sugar-table tr:hover {
             background-color: #e8f4f8;
         }
+
+        .category-btn {
+            background: linear-gradient(135deg, #96fbc4 0%, #f9f586 100%);
+            color: #2c3e50;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(150, 251, 196, 0.3);
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(150, 251, 196, 0.4);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff9a56 100%);
+            color: white;
+        }
+
+        .food-item {
+            background: rgba(255,255,255,0.9);
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b35;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .food-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .food-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .food-calories {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .food-category {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-top: 4px;
+        }
     </style>
 </head>
 <body>
@@ -1480,6 +1536,33 @@
                 </div>
             </div>
 
+            <!-- คำนวณแคลอรี่อาหารไทย -->
+            <div class="calculator">
+                <h3>🍽️ คำนวณแคลอรี่อาหารไทย</h3>
+                <p><strong>ค้นหาปริมาณแคลอรี่ในอาหารไทยยอดนิยม</strong></p>
+                <p><em>อ้างอิง: <a href="https://hdmall.co.th/blog/table-of-calories-in-food-types/" target="_blank">HDmall</a></em></p>
+                
+                <div class="info-box">
+                    <h4>🔍 ค้นหาอาหาร</h4>
+                    <input type="text" id="food-search" placeholder="พิมพ์ชื่ออาหาร เช่น ข้าวขาว, ก๋วยเตี๋ยว, ลาบหมู" style="width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                    <button onclick="searchFood()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; margin: 10px 5px; transition: all 0.3s ease;">🔍 ค้นหา</button>
+                    <button onclick="showAllFoods()" style="background: linear-gradient(135deg, #ff6b35 0%, #ff9a56 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; margin: 10px 5px; transition: all 0.3s ease;">📋 ดูทั้งหมด</button>
+                </div>
+                
+                <div id="food-result" class="result"></div>
+                
+                <div id="food-categories" style="display: none;">
+                    <h4>📂 หมวดหมู่อาหาร</h4>
+                    <div style="display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap;">
+                        <button onclick="filterFoods('อาหารหลัก')" class="category-btn" data-category="อาหารหลัก">🍚 อาหารหลัก</button>
+                        <button onclick="filterFoods('เครื่องดื่ม')" class="category-btn" data-category="เครื่องดื่ม">🥤 เครื่องดื่ม</button>
+                        <button onclick="filterFoods('ของหวาน')" class="category-btn" data-category="ของหวาน">🍰 ของหวาน</button>
+                        <button onclick="filterFoods('อาหารจานเดียว')" class="category-btn" data-category="อาหารจานเดียว">🍽️ อาหารจานเดียว</button>
+                        <button onclick="filterFoods('ขนม')" class="category-btn" data-category="ขนม">🍪 ขนม</button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Thai CV Risk Score -->
             <div class="calculator">
                 <h3>❤️ Thai CV Risk Score</h3>
@@ -1792,6 +1875,162 @@
         }
 
 
+
+        // ฐานข้อมูลอาหารไทยจาก HDmall
+        const thaiFoodDatabase = [
+            // อาหารหลัก
+            { name: "ข้าวขาวสุก", calories: 80, unit: "1 ทัพพี (80 กรัม)", category: "อาหารหลัก" },
+            { name: "ข้าวขาวสุก", calories: 200, unit: "1 จาน (150 กรัม)", category: "อาหารหลัก" },
+            { name: "ข้าวกล้อง", calories: 85, unit: "1 ทัพพี (80 กรัม)", category: "อาหารหลัก" },
+            { name: "ข้าวต้มมัด", calories: 205, unit: "1 ห่อ", category: "อาหารหลัก" },
+            
+            // อาหารจานเดียว
+            { name: "ลาบหมู", calories: 215, unit: "1 จาน (150-200 กรัม)", category: "อาหารจานเดียว" },
+            { name: "ไก่ย่าง", calories: 207, unit: "1 ชิ้น (100 กรัม)", category: "อาหารจานเดียว" },
+            { name: "ก๋วยเตี๋ยว", calories: 250, unit: "1 ถ้วย (200-250 กรัม)", category: "อาหารจานเดียว" },
+            { name: "ก๋วยเตี๋ยวน้ำตก", calories: 350, unit: "1 ถ้วย (200-250 กรัม)", category: "อาหารจานเดียว" },
+            { name: "ก๋วยเตี๋ยวเรือ", calories: 350, unit: "1 ถ้วย (200-250 กรัม)", category: "อาหารจานเดียว" },
+            { name: "ยำมาม่า", calories: 350, unit: "1 จาน (200-250 กรัม)", category: "อาหารจานเดียว" },
+            { name: "กระเพาะปลา", calories: 225, unit: "1 ถ้วย (250-300 กรัม)", category: "อาหารจานเดียว" },
+            { name: "ราดหน้า", calories: 500, unit: "1 จาน (250-300 กรัม)", category: "อาหารจานเดียว" },
+            { name: "ผัดไทย", calories: 400, unit: "1 จาน", category: "อาหารจานเดียว" },
+            { name: "ข้าวผัด", calories: 450, unit: "1 จาน", category: "อาหารจานเดียว" },
+            { name: "ข้าวมันไก่", calories: 600, unit: "1 จาน", category: "อาหารจานเดียว" },
+            { name: "ข้าวขาหมู", calories: 700, unit: "1 จาน", category: "อาหารจานเดียว" },
+            { name: "ข้าวหมูแดง", calories: 550, unit: "1 จาน", category: "อาหารจานเดียว" },
+            { name: "ข้าวหมูกรอบ", calories: 650, unit: "1 จาน", category: "อาหารจานเดียว" },
+            { name: "ข้าวกะเพรา", calories: 500, unit: "1 จาน", category: "อาหารจานเดียว" },
+            { name: "ข้าวผัดกุ้ง", calories: 450, unit: "1 จาน", category: "อาหารจานเดียว" },
+            
+            // เครื่องดื่ม
+            { name: "น้ำอัดลม", calories: 140, unit: "1 กระป๋อง (330 มล.)", category: "เครื่องดื่ม" },
+            { name: "น้ำผลไม้", calories: 120, unit: "1 แก้ว (240 มล.)", category: "เครื่องดื่ม" },
+            { name: "ชาเขียวหวาน", calories: 100, unit: "1 ขวด (500 มล.)", category: "เครื่องดื่ม" },
+            { name: "กาแฟเย็น", calories: 200, unit: "1 แก้ว", category: "เครื่องดื่ม" },
+            { name: "ชานมไข่มุก", calories: 300, unit: "1 แก้ว", category: "เครื่องดื่ม" },
+            { name: "น้ำมะนาว", calories: 10, unit: "1 แก้ว", category: "เครื่องดื่ม" },
+            { name: "น้ำอัญชัน", calories: 15, unit: "1 แก้ว", category: "เครื่องดื่ม" },
+            { name: "น้ำใบเตย", calories: 20, unit: "1 แก้ว", category: "เครื่องดื่ม" },
+            { name: "น้ำขิง", calories: 25, unit: "1 แก้ว", category: "เครื่องดื่ม" },
+            { name: "น้ำเปล่า", calories: 0, unit: "1 แก้ว", category: "เครื่องดื่ม" },
+            
+            // ของหวาน
+            { name: "กล้วยทอด", calories: 135, unit: "1 ชิ้น (50-70 กรัม)", category: "ของหวาน" },
+            { name: "ไอศกรีมกะทิ", calories: 108, unit: "1 ก้อน", category: "ของหวาน" },
+            { name: "ไอศกรีมกาแฟ", calories: 142, unit: "1 ก้อน", category: "ของหวาน" },
+            { name: "ไอศกรีมช็อกโกแลต", calories: 110, unit: "1 ก้อน", category: "ของหวาน" },
+            { name: "ไอศกรีมวานิลลา", calories: 140, unit: "1 ก้อน", category: "ของหวาน" },
+            { name: "ไอศกรีมสตรอว์เบอร์รี", calories: 110, unit: "1 ก้อน", category: "ของหวาน" },
+            { name: "ไอศกรีมเรซิน", calories: 264, unit: "1 ก้อน", category: "ของหวาน" },
+            { name: "ขนมครก", calories: 150, unit: "1 ชิ้น", category: "ของหวาน" },
+            { name: "ขนมถ้วย", calories: 80, unit: "1 ถ้วย", category: "ของหวาน" },
+            { name: "ขนมบัวลอย", calories: 200, unit: "1 ถ้วย", category: "ของหวาน" },
+            { name: "ขนมตาล", calories: 120, unit: "1 ชิ้น", category: "ของหวาน" },
+            { name: "ขนมชั้น", calories: 180, unit: "1 ชิ้น", category: "ของหวาน" },
+            
+            // ขนม
+            { name: "โดนัท", calories: 270, unit: "1 ชิ้น", category: "ขนม" },
+            { name: "โรตีสายไหม", calories: 145, unit: "1 ชิ้น", category: "ขนม" },
+            { name: "แซนด์วิชไก่", calories: 240, unit: "1 คู่", category: "ขนม" },
+            { name: "แยมโรล", calories: 310, unit: "1 ชิ้น", category: "ขนม" },
+            { name: "แฮมเบอร์เกอร์ไก่ชีส", calories: 280, unit: "1 ชิ้น", category: "ขนม" },
+            { name: "แฮมเบอร์เกอร์หมู", calories: 245, unit: "1 ชิ้น", category: "ขนม" },
+            { name: "ขนมปัง", calories: 80, unit: "1 แผ่น", category: "ขนม" },
+            { name: "เค้ก", calories: 350, unit: "1 ชิ้น", category: "ขนม" },
+            { name: "คุกกี้", calories: 50, unit: "1 ชิ้น", category: "ขนม" },
+            { name: "บิสกิต", calories: 45, unit: "1 ชิ้น", category: "ขนม" }
+        ];
+
+        function searchFood() {
+            const searchTerm = document.getElementById('food-search').value.toLowerCase().trim();
+            const resultDiv = document.getElementById('food-result');
+            const categoriesDiv = document.getElementById('food-categories');
+            
+            if (!searchTerm) {
+                resultDiv.innerHTML = '<p style="color: red;">กรุณาพิมพ์ชื่ออาหารที่ต้องการค้นหา</p>';
+                return;
+            }
+            
+            const results = thaiFoodDatabase.filter(food => 
+                food.name.toLowerCase().includes(searchTerm)
+            );
+            
+            if (results.length === 0) {
+                resultDiv.innerHTML = `
+                    <p style="color: red;">ไม่พบอาหารที่ค้นหา: "${searchTerm}"</p>
+                    <p>ลองค้นหาด้วยคำอื่น เช่น "ข้าว", "ก๋วยเตี๋ยว", "ลาบ"</p>
+                `;
+                categoriesDiv.style.display = 'none';
+                return;
+            }
+            
+            displayFoodResults(results, `ผลการค้นหา: "${searchTerm}"`);
+            categoriesDiv.style.display = 'block';
+        }
+
+        function showAllFoods() {
+            const resultDiv = document.getElementById('food-result');
+            const categoriesDiv = document.getElementById('food-categories');
+            
+            displayFoodResults(thaiFoodDatabase, 'รายการอาหารทั้งหมด');
+            categoriesDiv.style.display = 'block';
+        }
+
+        function filterFoods(category) {
+            const resultDiv = document.getElementById('food-result');
+            const filteredFoods = thaiFoodDatabase.filter(food => food.category === category);
+            
+            // อัพเดต active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            displayFoodResults(filteredFoods, `หมวดหมู่: ${category}`);
+        }
+
+        function displayFoodResults(foods, title) {
+            const resultDiv = document.getElementById('food-result');
+            
+            let html = `<h4>${title} (${foods.length} รายการ)</h4>`;
+            
+            // จัดกลุ่มตามหมวดหมู่
+            const groupedFoods = {};
+            foods.forEach(food => {
+                if (!groupedFoods[food.category]) {
+                    groupedFoods[food.category] = [];
+                }
+                groupedFoods[food.category].push(food);
+            });
+            
+            Object.keys(groupedFoods).forEach(category => {
+                html += `<h5 style="color: #2c3e50; margin-top: 20px; margin-bottom: 10px;">${getCategoryIcon(category)} ${category}</h5>`;
+                groupedFoods[category].forEach(food => {
+                    html += `
+                        <div class="food-item">
+                            <div>
+                                <div class="food-name">${food.name}</div>
+                                <div class="food-category">${food.unit}</div>
+                            </div>
+                            <div class="food-calories">${food.calories} แคลอรี่</div>
+                        </div>
+                    `;
+                });
+            });
+            
+            resultDiv.innerHTML = html;
+        }
+
+        function getCategoryIcon(category) {
+            const icons = {
+                'อาหารหลัก': '🍚',
+                'อาหารจานเดียว': '🍽️',
+                'เครื่องดื่ม': '🥤',
+                'ของหวาน': '🍰',
+                'ขนม': '🍪'
+            };
+            return icons[category] || '🍽️';
+        }
 
         // เพิ่มการทำงานของปุ่ม Enter ในฟิลด์ input
         document.addEventListener('DOMContentLoaded', function() {
