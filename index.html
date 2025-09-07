@@ -1556,6 +1556,7 @@
                     <div style="display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap;">
                         <button onclick="filterFoods('อาหารหลัก')" class="category-btn" data-category="อาหารหลัก">🍚 อาหารหลัก</button>
                         <button onclick="filterFoods('ผัก')" class="category-btn" data-category="ผัก">🥬 ผัก</button>
+                        <button onclick="filterFoods('ผลไม้')" class="category-btn" data-category="ผลไม้">🍎 ผลไม้</button>
                         <button onclick="filterFoods('โปรตีน')" class="category-btn" data-category="โปรตีน">🥩 โปรตีน</button>
                         <button onclick="filterFoods('เครื่องปรุง')" class="category-btn" data-category="เครื่องปรุง">🧂 เครื่องปรุง</button>
                         <button onclick="filterFoods('เครื่องดื่ม')" class="category-btn" data-category="เครื่องดื่ม">🥤 เครื่องดื่ม</button>
@@ -1891,6 +1892,19 @@
             // ผัก
             { name: "ผัก", calories: 80, unit: "1 ทัพพี", category: "ผัก" },
             
+            // ผลไม้
+            { name: "มะม่วง", calories: 120, unit: "1 ผล", category: "ผลไม้" },
+            { name: "กล้วยหอม", calories: 120, unit: "1 ผล", category: "ผลไม้" },
+            { name: "ฝรั่ง", calories: 120, unit: "1 ผล", category: "ผลไม้" },
+            { name: "องุ่น", calories: 120, unit: "1 พวง (15-20 ผล)", category: "ผลไม้" },
+            { name: "มะละกอ", calories: 60, unit: "6-8 ชิ้น", category: "ผลไม้" },
+            { name: "ทุเรียน", calories: 60, unit: "1 พูเล็ก", category: "ผลไม้" },
+            { name: "มังคุด", calories: 60, unit: "4 ผล", category: "ผลไม้" },
+            { name: "ส้ม", calories: 60, unit: "1 ผล", category: "ผลไม้" },
+            { name: "แตงโม", calories: 60, unit: "8-10 ชิ้น", category: "ผลไม้" },
+            { name: "สับปะรด", calories: 60, unit: "6-8 ชิ้น", category: "ผลไม้" },
+            { name: "แอปเปิล", calories: 60, unit: "1 ผลเล็ก", category: "ผลไม้" },
+            
             // อาหารจานเดียว
             { name: "ลาบหมู", calories: 215, unit: "1 จาน (150-200 กรัม)", category: "อาหารจานเดียว" },
             { name: "ไก่ย่าง", calories: 207, unit: "1 ชิ้น (100 กรัม)", category: "อาหารจานเดียว" },
@@ -2043,6 +2057,7 @@
             const icons = {
                 'อาหารหลัก': '🍚',
                 'ผัก': '🥬',
+                'ผลไม้': '🍎',
                 'โปรตีน': '🥩',
                 'เครื่องปรุง': '🧂',
                 'อาหารจานเดียว': '🍽️',
