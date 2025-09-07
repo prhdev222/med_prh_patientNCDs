@@ -1376,6 +1376,47 @@
                 <div id="heartrate-result" class="result"></div>
             </div>
 
+            <!-- คำนวณ BMR และ TDEE -->
+            <div class="calculator">
+                <h3>🔥 คำนวณ BMR และ TDEE</h3>
+                <p><strong>คำนวณอัตราการเผาผลาญพื้นฐาน (BMR) และพลังงานที่ใช้ต่อวัน (TDEE)</strong></p>
+                <p><em>อ้างอิง: <a href="https://hpc.go.th/diet/?module=bmr" target="_blank">สถาบันโภชนาการ มหาวิทยาลัยมหิดล</a></em></p>
+                
+                <div class="info-box">
+                    <h4>📋 ข้อมูลที่จำเป็น</h4>
+                    <ul>
+                        <li>อายุ (ปี)</li>
+                        <li>เพศ</li>
+                        <li>น้ำหนัก (กิโลกรัม)</li>
+                        <li>ส่วนสูง (เซนติเมตร)</li>
+                        <li>ระดับกิจกรรม</li>
+                    </ul>
+                </div>
+
+                <input type="number" id="bmr-age" placeholder="อายุ (ปี)" min="1" max="120">
+                
+                <select id="bmr-gender">
+                    <option value="">เลือกเพศ</option>
+                    <option value="male">ชาย</option>
+                    <option value="female">หญิง</option>
+                </select>
+                
+                <input type="number" id="bmr-weight" placeholder="น้ำหนัก (กิโลกรัม)" step="0.1">
+                <input type="number" id="bmr-height" placeholder="ส่วนสูง (เซนติเมตร)" step="0.1">
+                
+                <select id="bmr-activity">
+                    <option value="">เลือกระดับกิจกรรม</option>
+                    <option value="1.2">นั่งทำงาน (Sedentary) - ไม่ออกกำลังกาย</option>
+                    <option value="1.375">ออกกำลังกายเบา (Light) - 1-3 วัน/สัปดาห์</option>
+                    <option value="1.55">ออกกำลังกายปานกลาง (Moderate) - 3-5 วัน/สัปดาห์</option>
+                    <option value="1.725">ออกกำลังกายหนัก (Active) - 6-7 วัน/สัปดาห์</option>
+                    <option value="1.9">ออกกำลังกายหนักมาก (Very Active) - 2 ครั้ง/วัน</option>
+                </select>
+                
+                <button onclick="calculateBMR()">คำนวณ BMR และ TDEE</button>
+                <div id="bmr-result" class="result"></div>
+            </div>
+
             <!-- คำนวณแคลอรี่ที่ควรลด -->
             <div class="calculator">
                 <h3>🔥 คำนวณแคลอรี่ที่ควรลดเพื่อลดน้ำหนัก</h3>
@@ -1572,6 +1613,102 @@
                     <p>🔴 <strong>ระดับหนัก:</strong> ${vigorousMin}-${vigorousMax} ครั้ง/นาที</p>
                 </div>
                 <p style="margin-top: 10px; font-style: italic;">แนะนำ: ออกกำลังกายในระดับปานกลางอย่างน้อย 150 นาที/สัปดาห์</p>
+            `;
+        }
+
+        // คำนวณ BMR และ TDEE
+        function calculateBMR() {
+            const age = parseInt(document.getElementById('bmr-age').value);
+            const gender = document.getElementById('bmr-gender').value;
+            const weight = parseFloat(document.getElementById('bmr-weight').value);
+            const height = parseFloat(document.getElementById('bmr-height').value);
+            const activity = parseFloat(document.getElementById('bmr-activity').value);
+            const resultDiv = document.getElementById('bmr-result');
+
+            if (!age || !gender || !weight || !height || !activity) {
+                resultDiv.innerHTML = '<p style="color: red;">กรุณากรอกข้อมูลให้ครบถ้วน</p>';
+                return;
+            }
+
+            if (age < 1 || age > 120) {
+                resultDiv.innerHTML = '<p style="color: red;">อายุต้องอยู่ระหว่าง 1-120 ปี</p>';
+                return;
+            }
+
+            if (weight <= 0 || height <= 0) {
+                resultDiv.innerHTML = '<p style="color: red;">น้ำหนักและส่วนสูงต้องมากกว่า 0</p>';
+                return;
+            }
+
+            // คำนวณ BMR ตามสูตร Harris-Benedict
+            let bmr = 0;
+            if (gender === 'male') {
+                bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+            } else {
+                bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+            }
+
+            // คำนวณ TDEE
+            const tdee = bmr * activity;
+
+            // คำนวณแคลอรี่ตามเป้าหมายน้ำหนัก
+            const lose05kg = tdee - 500; // ลด 0.5 กก./สัปดาห์
+            const lose1kg = tdee - 1000; // ลด 1 กก./สัปดาห์
+            const gain05kg = tdee + 500; // เพิ่ม 0.5 กก./สัปดาห์
+            const gain1kg = tdee + 1000; // เพิ่ม 1 กก./สัปดาห์
+
+            // ระดับกิจกรรม
+            let activityText = '';
+            switch(activity) {
+                case 1.2: activityText = 'นั่งทำงาน (Sedentary)'; break;
+                case 1.375: activityText = 'ออกกำลังกายเบา (Light)'; break;
+                case 1.55: activityText = 'ออกกำลังกายปานกลาง (Moderate)'; break;
+                case 1.725: activityText = 'ออกกำลังกายหนัก (Active)'; break;
+                case 1.9: activityText = 'ออกกำลังกายหนักมาก (Very Active)'; break;
+            }
+
+            resultDiv.innerHTML = `
+                <h4>ผลการคำนวณ BMR และ TDEE</h4>
+                <div style="margin-bottom: 15px; padding: 10px; background: #e8f4f8; border-radius: 5px;">
+                    <p><strong>ข้อมูลส่วนตัว:</strong></p>
+                    <p>• อายุ: ${age} ปี | เพศ: ${gender === 'male' ? 'ชาย' : 'หญิง'}</p>
+                    <p>• น้ำหนัก: ${weight} กก. | ส่วนสูง: ${height} ซม.</p>
+                    <p>• ระดับกิจกรรม: ${activityText}</p>
+                </div>
+
+                <div style="margin-bottom: 15px; padding: 10px; background: #fff3cd; border-radius: 5px;">
+                    <h4>📊 ผลการคำนวณ</h4>
+                    <p><strong>BMR (Basal Metabolic Rate):</strong> ${bmr.toFixed(0)} แคลอรี่/วัน</p>
+                    <p><strong>TDEE (Total Daily Energy Expenditure):</strong> ${tdee.toFixed(0)} แคลอรี่/วัน</p>
+                </div>
+
+                <div style="margin-bottom: 15px; padding: 10px; background: #d1ecf1; border-radius: 5px;">
+                    <h4>🎯 แคลอรี่ที่ควรบริโภคตามเป้าหมาย</h4>
+                    <p><strong>เพื่อลดน้ำหนัก:</strong></p>
+                    <p>• คุณต้องบริโภค <strong>${lose05kg.toFixed(0)} แคลอรี่/วัน</strong> เพื่อลด 0.5 กิโลกรัม/สัปดาห์</p>
+                    <p>• คุณต้องบริโภค <strong>${lose1kg.toFixed(0)} แคลอรี่/วัน</strong> เพื่อลด 1 กิโลกรัม/สัปดาห์</p>
+                    
+                    <p><strong>เพื่อเพิ่มน้ำหนัก:</strong></p>
+                    <p>• คุณต้องบริโภค <strong>${gain05kg.toFixed(0)} แคลอรี่/วัน</strong> เพื่อเพิ่ม 0.5 กิโลกรัม/สัปดาห์</p>
+                    <p>• คุณต้องบริโภค <strong>${gain1kg.toFixed(0)} แคลอรี่/วัน</strong> เพื่อเพิ่ม 1 กิโลกรัม/สัปดาห์</p>
+                </div>
+
+                <div style="margin-top: 15px; padding: 10px; background: #f8d7da; border-radius: 5px;">
+                    <h4>📚 สูตรที่ใช้</h4>
+                    <p><strong>BMR (Harris-Benedict Equation):</strong></p>
+                    <p>• ชาย: BMR = 88.362 + (13.397 × น้ำหนัก) + (4.799 × ส่วนสูง) - (5.677 × อายุ)</p>
+                    <p>• หญิง: BMR = 447.593 + (9.247 × น้ำหนัก) + (3.098 × ส่วนสูง) - (4.330 × อายุ)</p>
+                    <p><strong>TDEE = BMR × Activity Factor</strong></p>
+                    <p><strong>อ้างอิง:</strong> <a href="https://hpc.go.th/diet/?module=bmr" target="_blank">สถาบันโภชนาการ มหาวิทยาลัยมหิดล</a></p>
+                </div>
+
+                <div style="margin-top: 15px; padding: 10px; background: #d4edda; border-radius: 5px;">
+                    <h4>💡 คำแนะนำ</h4>
+                    <p>• การลดน้ำหนัก 0.5-1 กก./สัปดาห์ ถือเป็นอัตราที่ปลอดภัย</p>
+                    <p>• ควรผสมผสานระหว่างการควบคุมอาหารและการออกกำลังกาย</p>
+                    <p>• ปรึกษาแพทย์หรือนักโภชนาการก่อนเริ่มแผนการลด/เพิ่มน้ำหนัก</p>
+                    <p>• ปรับแคลอรี่ตามผลการเปลี่ยนแปลงน้ำหนัก</p>
+                </div>
             `;
         }
 
