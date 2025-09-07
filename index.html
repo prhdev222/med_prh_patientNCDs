@@ -1475,7 +1475,7 @@
                         <li>ส่วนสูง (เซนติเมตร)</li>
                         <li>ระดับกิจกรรม</li>
                     </ul>
-                </div>
+            </div>
 
                 <input type="number" id="bmr-age" placeholder="อายุ (ปี)" min="1" max="120">
                 
@@ -1534,7 +1534,7 @@
                     </div>
                     <p><em>อ้างอิง : <a href="http://www.xn--42c5bdb8bzej3s.com/" target="_blank">www.นับคาร์บ.com</a></em></p>
                 </div>
-            </div>
+                </div>
 
             <!-- คำนวณแคลอรี่อาหารไทย -->
             <div class="calculator">
@@ -1555,6 +1555,9 @@
                     <h4>📂 หมวดหมู่อาหาร</h4>
                     <div style="display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap;">
                         <button onclick="filterFoods('อาหารหลัก')" class="category-btn" data-category="อาหารหลัก">🍚 อาหารหลัก</button>
+                        <button onclick="filterFoods('ผัก')" class="category-btn" data-category="ผัก">🥬 ผัก</button>
+                        <button onclick="filterFoods('โปรตีน')" class="category-btn" data-category="โปรตีน">🥩 โปรตีน</button>
+                        <button onclick="filterFoods('เครื่องปรุง')" class="category-btn" data-category="เครื่องปรุง">🧂 เครื่องปรุง</button>
                         <button onclick="filterFoods('เครื่องดื่ม')" class="category-btn" data-category="เครื่องดื่ม">🥤 เครื่องดื่ม</button>
                         <button onclick="filterFoods('ของหวาน')" class="category-btn" data-category="ของหวาน">🍰 ของหวาน</button>
                         <button onclick="filterFoods('อาหารจานเดียว')" class="category-btn" data-category="อาหารจานเดียว">🍽️ อาหารจานเดียว</button>
@@ -1882,7 +1885,11 @@
             { name: "ข้าวขาวสุก", calories: 80, unit: "1 ทัพพี (80 กรัม)", category: "อาหารหลัก" },
             { name: "ข้าวขาวสุก", calories: 200, unit: "1 จาน (150 กรัม)", category: "อาหารหลัก" },
             { name: "ข้าวกล้อง", calories: 85, unit: "1 ทัพพี (80 กรัม)", category: "อาหารหลัก" },
+            { name: "ข้าวเหนียว", calories: 120, unit: "1 ทัพพี", category: "อาหารหลัก" },
             { name: "ข้าวต้มมัด", calories: 205, unit: "1 ห่อ", category: "อาหารหลัก" },
+            
+            // ผัก
+            { name: "ผัก", calories: 80, unit: "1 ทัพพี", category: "ผัก" },
             
             // อาหารจานเดียว
             { name: "ลาบหมู", calories: 215, unit: "1 จาน (150-200 กรัม)", category: "อาหารจานเดียว" },
@@ -1913,6 +1920,17 @@
             { name: "น้ำใบเตย", calories: 20, unit: "1 แก้ว", category: "เครื่องดื่ม" },
             { name: "น้ำขิง", calories: 25, unit: "1 แก้ว", category: "เครื่องดื่ม" },
             { name: "น้ำเปล่า", calories: 0, unit: "1 แก้ว", category: "เครื่องดื่ม" },
+            
+            // โปรตีน
+            { name: "อกไก่", calories: 20, unit: "1 ช้อนโต๊ะ", category: "โปรตีน" },
+            { name: "ปลา", calories: 20, unit: "1 ช้อนโต๊ะ", category: "โปรตีน" },
+            { name: "เนื้อหมู", calories: 38, unit: "1 ช้อนโต๊ะ", category: "โปรตีน" },
+            { name: "เนื้อวัว", calories: 38, unit: "1 ช้อนโต๊ะ", category: "โปรตีน" },
+            
+            // เครื่องปรุง
+            { name: "น้ำมัน", calories: 45, unit: "1 ช้อนชา", category: "เครื่องปรุง" },
+            { name: "น้ำตาล", calories: 16, unit: "1 ช้อนชา", category: "เครื่องปรุง" },
+            { name: "นมข้นหวาน", calories: 19, unit: "1 ช้อนชา", category: "เครื่องปรุง" },
             
             // ของหวาน
             { name: "กล้วยทอด", calories: 135, unit: "1 ชิ้น (50-70 กรัม)", category: "ของหวาน" },
@@ -1950,7 +1968,7 @@
                 resultDiv.innerHTML = '<p style="color: red;">กรุณาพิมพ์ชื่ออาหารที่ต้องการค้นหา</p>';
                 return;
             }
-            
+
             const results = thaiFoodDatabase.filter(food => 
                 food.name.toLowerCase().includes(searchTerm)
             );
@@ -1963,7 +1981,7 @@
                 categoriesDiv.style.display = 'none';
                 return;
             }
-            
+
             displayFoodResults(results, `ผลการค้นหา: "${searchTerm}"`);
             categoriesDiv.style.display = 'block';
         }
@@ -2013,8 +2031,8 @@
                                 <div class="food-category">${food.unit}</div>
                             </div>
                             <div class="food-calories">${food.calories} แคลอรี่</div>
-                        </div>
-                    `;
+                </div>
+            `;
                 });
             });
             
@@ -2024,6 +2042,9 @@
         function getCategoryIcon(category) {
             const icons = {
                 'อาหารหลัก': '🍚',
+                'ผัก': '🥬',
+                'โปรตีน': '🥩',
+                'เครื่องปรุง': '🧂',
                 'อาหารจานเดียว': '🍽️',
                 'เครื่องดื่ม': '🥤',
                 'ของหวาน': '🍰',
