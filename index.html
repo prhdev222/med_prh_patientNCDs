@@ -461,6 +461,10 @@
         <header class="header">
             <h1>🏥 ความรู้เรื่อง NCDs สำหรับพระภิกษุสงฆ์</h1>
             <p>โรงพยาบาลสงฆ์ - ดูแลสุขภาพด้วยหลักธรรม</p>
+            <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">
+                <a href="https://github.com/uradev" target="_blank" style="color: #fff; text-decoration: none; margin-right: 1rem;">💻 GitHub</a>
+                <a href="http://www.xn--42c5bdb8bzej3s.com/" target="_blank" style="color: #fff; text-decoration: none;">🌐 ข้อมูลเบาหวาน</a>
+            </div>
         </header>
 
         <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
@@ -786,6 +790,65 @@
                             <li><strong>สะสมเป็นไขมันพอกตับ!</strong></li>
                         </ul>
                     </li>
+                </ul>
+            </div>
+
+            <h3>การนับคาร์โบไฮเดรต (Carbohydrate Counting)</h3>
+            <div class="disease-card">
+                <h3>🍚 หลักการนับคาร์บ</h3>
+                <p>การนับคาร์โบไฮเดรตเป็นเทคนิคสำคัญในการควบคุมระดับน้ำตาลในเลือดสำหรับผู้ป่วยเบาหวาน</p>
+                
+                <h4>📊 หน่วยการนับคาร์บ</h4>
+                <ul>
+                    <li><strong>1 คาร์บยูนิต = 15 กรัมคาร์โบไฮเดรต</strong></li>
+                    <li>ใช้เป็นมาตรฐานในการคำนวณปริมาณคาร์บในอาหาร</li>
+                    <li>ช่วยให้ผู้ป่วยเบาหวานควบคุมน้ำตาลได้ดีขึ้น</li>
+                </ul>
+            </div>
+
+            <div class="blood-sugar-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>อาหาร</th>
+                            <th>ปริมาณ</th>
+                            <th>คาร์โบไฮเดรต (กรัม)</th>
+                            <th>คาร์บยูนิต</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>ข้าวสวย</td><td>1 ทัพพี</td><td>15</td><td>1</td></tr>
+                        <tr><td>ข้าวกล้อง</td><td>1 ทัพพี</td><td>15</td><td>1</td></tr>
+                        <tr><td>ขนมปัง</td><td>1 แผ่น</td><td>15</td><td>1</td></tr>
+                        <tr><td>ก๋วยเตี๋ยว</td><td>1 ชาม</td><td>30</td><td>2</td></tr>
+                        <tr><td>สปาเก็ตตี้</td><td>1 จาน</td><td>45</td><td>3</td></tr>
+                        <tr><td>แอปเปิ้ล</td><td>1 ลูกเล็ก</td><td>15</td><td>1</td></tr>
+                        <tr><td>กล้วย</td><td>1 ลูกเล็ก</td><td>15</td><td>1</td></tr>
+                        <tr><td>ส้ม</td><td>1 ลูกกลาง</td><td>15</td><td>1</td></tr>
+                        <tr><td>นม</td><td>1 แก้ว (240 มล.)</td><td>12</td><td>0.8</td></tr>
+                        <tr><td>โยเกิร์ต</td><td>1 ถ้วย</td><td>15</td><td>1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box">
+                <h4>💡 เคล็ดลับการนับคาร์บ</h4>
+                <ul>
+                    <li><strong>อ่านฉลากอาหาร:</strong> ดูปริมาณคาร์โบไฮเดรตต่อหน่วยบริโภค</li>
+                    <li><strong>ใช้ตาชั่งอาหาร:</strong> ช่วยให้วัดปริมาณได้แม่นยำ</li>
+                    <li><strong>จดบันทึก:</strong> บันทึกอาหารและระดับน้ำตาลหลังอาหาร</li>
+                    <li><strong>ปรึกษาผู้เชี่ยวชาญ:</strong> นักโภชนาการหรือแพทย์</li>
+                    <li><strong>ปรับตามผล:</strong> ปรับปริมาณคาร์บตามระดับน้ำตาลในเลือด</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ ข้อควรระวัง</h4>
+                <ul>
+                    <li>การนับคาร์บต้องทำอย่างสม่ำเสมอและแม่นยำ</li>
+                    <li>ควรตรวจน้ำตาลในเลือดหลังอาหาร 2 ชั่วโมง</li>
+                    <li>ปริมาณคาร์บที่เหมาะสมอาจแตกต่างกันในแต่ละบุคคล</li>
+                    <li>ควรปรึกษาแพทย์ก่อนปรับเปลี่ยนแผนการกิน</li>
                 </ul>
             </div>
         </section>
@@ -1339,6 +1402,36 @@
                 <div id="waist-result" class="result"></div>
             </div>
 
+            <!-- คำนวณคาร์บ -->
+            <div class="calculator">
+                <h3>🍚 เครื่องคำนวณนับคาร์บ (Carb Counting)</h3>
+                <p><strong>สำหรับผู้ป่วยเบาหวาน - คำนวณปริมาณคาร์โบไฮเดรตในอาหาร</strong></p>
+                <p><em>อ้างอิง: <a href="http://www.xn--42c5bdb8bzej3s.com/" target="_blank">เว็บไซต์ความรู้เรื่องเบาหวาน</a></em></p>
+                
+                <div class="info-box">
+                    <h4>📋 ข้อมูลที่จำเป็น</h4>
+                    <ul>
+                        <li>น้ำหนักตัว (กิโลกรัม)</li>
+                        <li>ระดับกิจกรรม (นั่งทำงาน, ทำงานปานกลาง, ทำงานหนัก)</li>
+                        <li>เป้าหมายน้ำตาลในเลือด (mg/dL)</li>
+                    </ul>
+                </div>
+
+                <input type="number" id="carb-weight" placeholder="น้ำหนักตัว (กิโลกรัม)" step="0.1">
+                
+                <select id="carb-activity">
+                    <option value="">เลือกระดับกิจกรรม</option>
+                    <option value="sedentary">นั่งทำงาน (Sedentary)</option>
+                    <option value="moderate">ทำงานปานกลาง (Moderate)</option>
+                    <option value="active">ทำงานหนัก (Active)</option>
+                </select>
+                
+                <input type="number" id="carb-target" placeholder="เป้าหมายน้ำตาลในเลือด (mg/dL)" value="140">
+                
+                <button onclick="calculateCarb()">คำนวณคาร์บ</button>
+                <div id="carb-result" class="result"></div>
+            </div>
+
             <!-- Thai CV Risk Score -->
             <div class="calculator">
                 <h3>❤️ Thai CV Risk Score</h3>
@@ -1396,6 +1489,13 @@
         <footer class="footer">
             <p>🏥 โรงพยาบาลสงฆ์ | Directed by uradev</p>
             <p>💝 ขอให้พระคุณเจ้ามีสุขภาพแข็งแรง</p>
+            <div style="margin-top: 1rem;">
+                <p>📚 แหล่งข้อมูลเพิ่มเติม:</p>
+                <p>
+                    <a href="http://www.xn--42c5bdb8bzej3s.com/" target="_blank" style="color: #fff; text-decoration: underline; margin-right: 1rem;">🌐 เว็บไซต์ความรู้เรื่องเบาหวาน</a>
+                    <a href="https://github.com/uradev" target="_blank" style="color: #fff; text-decoration: underline;">💻 GitHub Profile</a>
+                </p>
+            </div>
         </footer>
     </div>
 
@@ -1613,6 +1713,98 @@
                         </ul>
                     </div>
                 ` : ''}
+            `;
+        }
+
+        // คำนวณคาร์บ (Carb Counting)
+        function calculateCarb() {
+            const weight = parseFloat(document.getElementById('carb-weight').value);
+            const activity = document.getElementById('carb-activity').value;
+            const target = parseFloat(document.getElementById('carb-target').value) || 140;
+            const resultDiv = document.getElementById('carb-result');
+
+            if (!weight || !activity) {
+                resultDiv.innerHTML = '<p style="color: red;">กรุณากรอกข้อมูลให้ครบถ้วน</p>';
+                return;
+            }
+
+            if (weight <= 0) {
+                resultDiv.innerHTML = '<p style="color: red;">น้ำหนักต้องมากกว่า 0</p>';
+                return;
+            }
+
+            // คำนวณ BMR (Basal Metabolic Rate) ตามสูตร Harris-Benedict
+            let bmr = 0;
+            if (activity === 'sedentary') {
+                bmr = weight * 24 * 0.9; // นั่งทำงาน
+            } else if (activity === 'moderate') {
+                bmr = weight * 24 * 1.1; // ทำงานปานกลาง
+            } else if (activity === 'active') {
+                bmr = weight * 24 * 1.3; // ทำงานหนัก
+            }
+
+            // คำนวณคาร์โบไฮเดรตที่แนะนำ (45-65% ของแคลอรี่)
+            const carbCalories = bmr * 0.55; // ใช้ 55% เป็นค่าเฉลี่ย
+            const carbGrams = carbCalories / 4; // 1 กรัมคาร์บ = 4 แคลอรี่
+
+            // คำนวณคาร์บต่อมื้อ (3 มื้อ)
+            const carbPerMeal = carbGrams / 3;
+
+            // คำนวณคาร์บต่อ 15 กรัม (1 unit)
+            const carbUnits = carbGrams / 15;
+
+            // คำแนะนำตามเป้าหมายน้ำตาล
+            let recommendation = '';
+            if (target < 120) {
+                recommendation = 'เป้าหมายน้ำตาลต่ำมาก ควรปรึกษาแพทย์';
+            } else if (target <= 140) {
+                recommendation = 'เป้าหมายน้ำตาลเหมาะสม';
+            } else if (target <= 180) {
+                recommendation = 'เป้าหมายน้ำตาลสูง ควรปรับลด';
+            } else {
+                recommendation = 'เป้าหมายน้ำตาลสูงมาก ควรปรึกษาแพทย์ด่วน';
+            }
+
+            resultDiv.innerHTML = `
+                <h4>ผลการคำนวณคาร์บ</h4>
+                <p><strong>น้ำหนัก:</strong> ${weight} กก.</p>
+                <p><strong>ระดับกิจกรรม:</strong> ${activity === 'sedentary' ? 'นั่งทำงาน' : activity === 'moderate' ? 'ทำงานปานกลาง' : 'ทำงานหนัก'}</p>
+                <p><strong>เป้าหมายน้ำตาล:</strong> ${target} mg/dL</p>
+                
+                <div style="margin-top: 15px; padding: 10px; background: #e8f4f8; border-radius: 5px;">
+                    <h4>📊 ปริมาณคาร์โบไฮเดรตที่แนะนำ</h4>
+                    <p><strong>คาร์บต่อวัน:</strong> ${carbGrams.toFixed(0)} กรัม</p>
+                    <p><strong>คาร์บต่อมื้อ:</strong> ${carbPerMeal.toFixed(0)} กรัม (3 มื้อ)</p>
+                    <p><strong>คาร์บยูนิต:</strong> ${carbUnits.toFixed(1)} ยูนิต/วัน</p>
+                </div>
+
+                <div style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 5px;">
+                    <h4>🍽️ ตัวอย่างอาหาร 15 กรัมคาร์บ</h4>
+                    <ul>
+                        <li>ข้าวสวย 1 ทัพพี</li>
+                        <li>ขนมปัง 1 แผ่น</li>
+                        <li>แอปเปิ้ล 1 ลูกเล็ก</li>
+                        <li>กล้วย 1 ลูกเล็ก</li>
+                        <li>นม 1 แก้ว (240 มล.)</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 15px; padding: 10px; background: #d1ecf1; border-radius: 5px;">
+                    <h4>💡 คำแนะนำ</h4>
+                    <p><strong>เป้าหมายน้ำตาล:</strong> ${recommendation}</p>
+                    <p>• ควรกระจายคาร์บให้เท่ากันในแต่ละมื้อ</p>
+                    <p>• เลือกคาร์บที่มีดัชนีน้ำตาลต่ำ</p>
+                    <p>• ตรวจน้ำตาลในเลือดหลังอาหาร 2 ชั่วโมง</p>
+                    <p>• ปรึกษาแพทย์หรือนักโภชนาการเพื่อปรับแผนการกิน</p>
+                </div>
+
+                <div style="margin-top: 15px; padding: 10px; background: #f8d7da; border-radius: 5px;">
+                    <h4>⚠️ ข้อควรระวัง</h4>
+                    <p>• การคำนวณนี้เป็นเพียงแนวทางเบื้องต้น</p>
+                    <p>• ปริมาณคาร์บที่เหมาะสมอาจแตกต่างกันในแต่ละบุคคล</p>
+                    <p>• ควรปรับตามผลการตรวจน้ำตาลในเลือด</p>
+                    <p>• ปรึกษาแพทย์ก่อนปรับเปลี่ยนแผนการกิน</p>
+                </div>
             `;
         }
 
