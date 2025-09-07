@@ -1417,14 +1417,6 @@
                 <div id="bmr-result" class="result"></div>
             </div>
 
-            <!-- คำนวณแคลอรี่ที่ควรลด -->
-            <div class="calculator">
-                <h3>🔥 คำนวณแคลอรี่ที่ควรลดเพื่อลดน้ำหนัก</h3>
-                <input type="number" id="target-weight" placeholder="น้ำหนักที่ต้องการลด (กิโลกรัม)" step="0.1">
-                <input type="number" id="target-weeks" placeholder="ระยะเวลาที่ต้องการ (สัปดาห์)" min="1">
-                <button onclick="calculateCalories()">คำนวณแคลอรี่</button>
-                <div id="calories-result" class="result"></div>
-            </div>
 
             <!-- คำนวณรอบเอว -->
             <div class="calculator">
@@ -1712,36 +1704,6 @@
             `;
         }
 
-        function calculateCalories() {
-            const targetWeight = parseFloat(document.getElementById('target-weight').value);
-            const targetWeeks = parseInt(document.getElementById('target-weeks').value);
-            const resultDiv = document.getElementById('calories-result');
-
-            if (!targetWeight || !targetWeeks || targetWeight <= 0 || targetWeeks <= 0) {
-                resultDiv.innerHTML = '<p style="color: red;">กรุณากรอกข้อมูลที่ถูกต้อง</p>';
-                return;
-            }
-
-            const totalCalories = targetWeight * 7700; // 1 กก. = 7700 แคลอรี่
-            const caloriesPerDay = totalCalories / (targetWeeks * 7);
-            const caloriesPerWeek = totalCalories / targetWeeks;
-
-            resultDiv.innerHTML = `
-                <h4>แผนการลดน้ำหนัก</h4>
-                <p><strong>เป้าหมาย:</strong> ลดน้ำหนัก ${targetWeight} กก. ใน ${targetWeeks} สัปดาห์</p>
-                <p><strong>ต้องลดแคลอรี่:</strong></p>
-                <ul>
-                    <li>${caloriesPerDay.toFixed(0)} แคลอรี่/วัน</li>
-                    <li>${caloriesPerWeek.toFixed(0)} แคลอรี่/สัปดาห์</li>
-                </ul>
-                <div style="margin-top: 10px; padding: 10px; background: #e8f4f8; border-radius: 5px;">
-                    <p><strong>💡 คำแนะนำ:</strong></p>
-                    <p>• การลดน้ำหนัก 0.5-1 กก./สัปดาห์ ถือเป็นอัตราที่ปลอดภัย</p>
-                    <p>• ควรผสมผสานระหว่างการลดแคลอรี่จากอาหารและการออกกำลังกาย</p>
-                    <p>• ปรึกษาแพทย์หากต้องการลดน้ำหนักมากกว่า 1 กก./สัปดาห์</p>
-                </div>
-            `;
-        }
 
         function assessWaistRisk() {
             const gender = document.getElementById('gender').value;
