@@ -1406,30 +1406,21 @@
             <div class="calculator">
                 <h3>🍚 เครื่องคำนวณนับคาร์บ (Carb Counting)</h3>
                 <p><strong>สำหรับผู้ป่วยเบาหวาน - คำนวณปริมาณคาร์โบไฮเดรตในอาหาร</strong></p>
-                <p><em>อ้างอิง: <a href="http://www.xn--42c5bdb8bzej3s.com/" target="_blank">เว็บไซต์ความรู้เรื่องเบาหวาน</a></em></p>
                 
                 <div class="info-box">
-                    <h4>📋 ข้อมูลที่จำเป็น</h4>
-                    <ul>
-                        <li>น้ำหนักตัว (กิโลกรัม)</li>
-                        <li>ระดับกิจกรรม (นั่งทำงาน, ทำงานปานกลาง, ทำงานหนัก)</li>
-                        <li>เป้าหมายน้ำตาลในเลือด (mg/dL)</li>
-                    </ul>
+                    <h4>🔗 ลิงก์เครื่องคำนวณนับคาร์บ</h4>
+                    <p>คลิกที่ลิงก์ด้านล่างเพื่อไปยังเครื่องคำนวณนับคาร์บที่สมบูรณ์:</p>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <a href="http://www.xn--42c5bdb8bzej3s.com/" target="_blank" 
+                           style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                  color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; 
+                                  font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                                  transition: all 0.3s ease;">
+                            🍚 ไปยังเครื่องคำนวณนับคาร์บ
+                        </a>
+                    </div>
+                    <p><em>อ้างอิง: <a href="http://www.xn--42c5bdb8bzej3s.com/" target="_blank">เว็บไซต์ความรู้เรื่องเบาหวาน</a></em></p>
                 </div>
-
-                <input type="number" id="carb-weight" placeholder="น้ำหนักตัว (กิโลกรัม)" step="0.1">
-                
-                <select id="carb-activity">
-                    <option value="">เลือกระดับกิจกรรม</option>
-                    <option value="sedentary">นั่งทำงาน (Sedentary)</option>
-                    <option value="moderate">ทำงานปานกลาง (Moderate)</option>
-                    <option value="active">ทำงานหนัก (Active)</option>
-                </select>
-                
-                <input type="number" id="carb-target" placeholder="เป้าหมายน้ำตาลในเลือด (mg/dL)" value="140">
-                
-                <button onclick="calculateCarb()">คำนวณคาร์บ</button>
-                <div id="carb-result" class="result"></div>
             </div>
 
             <!-- Thai CV Risk Score -->
@@ -1716,97 +1707,6 @@
             `;
         }
 
-        // คำนวณคาร์บ (Carb Counting)
-        function calculateCarb() {
-            const weight = parseFloat(document.getElementById('carb-weight').value);
-            const activity = document.getElementById('carb-activity').value;
-            const target = parseFloat(document.getElementById('carb-target').value) || 140;
-            const resultDiv = document.getElementById('carb-result');
-
-            if (!weight || !activity) {
-                resultDiv.innerHTML = '<p style="color: red;">กรุณากรอกข้อมูลให้ครบถ้วน</p>';
-                return;
-            }
-
-            if (weight <= 0) {
-                resultDiv.innerHTML = '<p style="color: red;">น้ำหนักต้องมากกว่า 0</p>';
-                return;
-            }
-
-            // คำนวณ BMR (Basal Metabolic Rate) ตามสูตร Harris-Benedict
-            let bmr = 0;
-            if (activity === 'sedentary') {
-                bmr = weight * 24 * 0.9; // นั่งทำงาน
-            } else if (activity === 'moderate') {
-                bmr = weight * 24 * 1.1; // ทำงานปานกลาง
-            } else if (activity === 'active') {
-                bmr = weight * 24 * 1.3; // ทำงานหนัก
-            }
-
-            // คำนวณคาร์โบไฮเดรตที่แนะนำ (45-65% ของแคลอรี่)
-            const carbCalories = bmr * 0.55; // ใช้ 55% เป็นค่าเฉลี่ย
-            const carbGrams = carbCalories / 4; // 1 กรัมคาร์บ = 4 แคลอรี่
-
-            // คำนวณคาร์บต่อมื้อ (3 มื้อ)
-            const carbPerMeal = carbGrams / 3;
-
-            // คำนวณคาร์บต่อ 15 กรัม (1 unit)
-            const carbUnits = carbGrams / 15;
-
-            // คำแนะนำตามเป้าหมายน้ำตาล
-            let recommendation = '';
-            if (target < 120) {
-                recommendation = 'เป้าหมายน้ำตาลต่ำมาก ควรปรึกษาแพทย์';
-            } else if (target <= 140) {
-                recommendation = 'เป้าหมายน้ำตาลเหมาะสม';
-            } else if (target <= 180) {
-                recommendation = 'เป้าหมายน้ำตาลสูง ควรปรับลด';
-            } else {
-                recommendation = 'เป้าหมายน้ำตาลสูงมาก ควรปรึกษาแพทย์ด่วน';
-            }
-
-            resultDiv.innerHTML = `
-                <h4>ผลการคำนวณคาร์บ</h4>
-                <p><strong>น้ำหนัก:</strong> ${weight} กก.</p>
-                <p><strong>ระดับกิจกรรม:</strong> ${activity === 'sedentary' ? 'นั่งทำงาน' : activity === 'moderate' ? 'ทำงานปานกลาง' : 'ทำงานหนัก'}</p>
-                <p><strong>เป้าหมายน้ำตาล:</strong> ${target} mg/dL</p>
-                
-                <div style="margin-top: 15px; padding: 10px; background: #e8f4f8; border-radius: 5px;">
-                    <h4>📊 ปริมาณคาร์โบไฮเดรตที่แนะนำ</h4>
-                    <p><strong>คาร์บต่อวัน:</strong> ${carbGrams.toFixed(0)} กรัม</p>
-                    <p><strong>คาร์บต่อมื้อ:</strong> ${carbPerMeal.toFixed(0)} กรัม (3 มื้อ)</p>
-                    <p><strong>คาร์บยูนิต:</strong> ${carbUnits.toFixed(1)} ยูนิต/วัน</p>
-                </div>
-
-                <div style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 5px;">
-                    <h4>🍽️ ตัวอย่างอาหาร 15 กรัมคาร์บ</h4>
-                    <ul>
-                        <li>ข้าวสวย 1 ทัพพี</li>
-                        <li>ขนมปัง 1 แผ่น</li>
-                        <li>แอปเปิ้ล 1 ลูกเล็ก</li>
-                        <li>กล้วย 1 ลูกเล็ก</li>
-                        <li>นม 1 แก้ว (240 มล.)</li>
-                    </ul>
-                </div>
-
-                <div style="margin-top: 15px; padding: 10px; background: #d1ecf1; border-radius: 5px;">
-                    <h4>💡 คำแนะนำ</h4>
-                    <p><strong>เป้าหมายน้ำตาล:</strong> ${recommendation}</p>
-                    <p>• ควรกระจายคาร์บให้เท่ากันในแต่ละมื้อ</p>
-                    <p>• เลือกคาร์บที่มีดัชนีน้ำตาลต่ำ</p>
-                    <p>• ตรวจน้ำตาลในเลือดหลังอาหาร 2 ชั่วโมง</p>
-                    <p>• ปรึกษาแพทย์หรือนักโภชนาการเพื่อปรับแผนการกิน</p>
-                </div>
-
-                <div style="margin-top: 15px; padding: 10px; background: #f8d7da; border-radius: 5px;">
-                    <h4>⚠️ ข้อควรระวัง</h4>
-                    <p>• การคำนวณนี้เป็นเพียงแนวทางเบื้องต้น</p>
-                    <p>• ปริมาณคาร์บที่เหมาะสมอาจแตกต่างกันในแต่ละบุคคล</p>
-                    <p>• ควรปรับตามผลการตรวจน้ำตาลในเลือด</p>
-                    <p>• ปรึกษาแพทย์ก่อนปรับเปลี่ยนแผนการกิน</p>
-                </div>
-            `;
-        }
 
         // Thai CV Risk Score Calculation
         function calculateCVRisk() {
