@@ -1423,53 +1423,21 @@
             <div class="calculator">
                 <h3>❤️ Thai CV Risk Score</h3>
                 <p><strong>ประเมินความเสี่ยงต่อการเกิดโรคเส้นเลือดหัวใจและหลอดเลือดในระยะเวลา 10 ปี</strong></p>
-                <p><em>อ้างอิง: <a href="https://www.rama.mahidol.ac.th/cardio_vascular_risk/thai_cv_risk_score/" target="_blank">โรงพยาบาลรามาธิบดี</a></em></p>
                 
                 <div class="info-box">
-                    <h4>📋 ข้อมูลที่จำเป็น (ต้องกรอกทุกข้อ)</h4>
-                    <ul>
-                        <li>อายุ 35-70 ปี</li>
-                        <li>เพศ</li>
-                        <li>สูบบุหรี่หรือไม่</li>
-                        <li>เป็นโรคเบาหวานหรือไม่</li>
-                        <li>ความดันโลหิตตัวบน</li>
-                        <li>รอบเอว และ/หรือ ผลเลือด (โคเลสเตอรอล)</li>
-                    </ul>
+                    <h4>🔗 ลิงก์ประเมินความเสี่ยง Thai CV Risk Score</h4>
+                    <p>คลิกที่ลิงก์ด้านล่างเพื่อไปยังเครื่องประเมินความเสี่ยงที่สมบูรณ์:</p>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <a href="https://www.rama.mahidol.ac.th/cardio_vascular_risk/thai_cv_risk_score/" target="_blank" 
+                           style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                                  color: white; padding: 15px 30px; text-decoration: none; border-radius: 25px; 
+                                  font-size: 1.1rem; font-weight: bold; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+                                  transition: all 0.3s ease;">
+                            ❤️ ไปยัง Thai CV Risk Score
+                        </a>
+                    </div>
+                    <p><em>อ้างอิง: <a href="https://www.rama.mahidol.ac.th/cardio_vascular_risk/thai_cv_risk_score/" target="_blank">โรงพยาบาลรามาธิบดี</a></em></p>
                 </div>
-
-                <input type="number" id="cv-age" placeholder="อายุ (35-70 ปี)" min="35" max="70">
-                
-                <select id="cv-gender">
-                    <option value="">เลือกเพศ</option>
-                    <option value="male">ชาย</option>
-                    <option value="female">หญิง</option>
-                </select>
-                
-                <select id="cv-smoking">
-                    <option value="">สูบบุหรี่หรือไม่</option>
-                    <option value="no">ไม่สูบ</option>
-                    <option value="yes">สูบ</option>
-                </select>
-                
-                <select id="cv-diabetes">
-                    <option value="">เป็นโรคเบาหวานหรือไม่</option>
-                    <option value="no">ไม่เป็น</option>
-                    <option value="yes">เป็น</option>
-                </select>
-                
-                <input type="number" id="cv-sbp" placeholder="ความดันโลหิตตัวบน (mmHg)" min="80" max="250">
-                
-                <select id="cv-lab">
-                    <option value="">มีผลเลือดหรือไม่</option>
-                    <option value="no">ไม่มีผลเลือด (ใช้รอบเอว)</option>
-                    <option value="yes">มีผลเลือด (ใช้โคเลสเตอรอล)</option>
-                </select>
-                
-                <input type="number" id="cv-waist" placeholder="รอบเอว (เซนติเมตร)" step="0.1" style="display: none;">
-                <input type="number" id="cv-cholesterol" placeholder="โคเลสเตอรอลรวม (mg/dL)" step="0.1" style="display: none;">
-                
-                <button onclick="calculateCVRisk()">ประเมินความเสี่ยง</button>
-                <div id="cv-result" class="result"></div>
             </div>
         </section>
 
@@ -1697,130 +1665,6 @@
         }
 
 
-        // Thai CV Risk Score Calculation
-        function calculateCVRisk() {
-            const age = parseInt(document.getElementById('cv-age').value);
-            const gender = document.getElementById('cv-gender').value;
-            const smoking = document.getElementById('cv-smoking').value;
-            const diabetes = document.getElementById('cv-diabetes').value;
-            const sbp = parseInt(document.getElementById('cv-sbp').value);
-            const hasLab = document.getElementById('cv-lab').value;
-            const waist = parseFloat(document.getElementById('cv-waist').value);
-            const cholesterol = parseFloat(document.getElementById('cv-cholesterol').value);
-            const resultDiv = document.getElementById('cv-result');
-
-            // ตรวจสอบข้อมูลที่จำเป็น
-            if (!age || !gender || !smoking || !diabetes || !sbp || !hasLab) {
-                resultDiv.innerHTML = '<p style="color: red;">กรุณากรอกข้อมูลให้ครบถ้วน</p>';
-                return;
-            }
-
-            if (age < 35 || age > 70) {
-                resultDiv.innerHTML = '<p style="color: red;">อายุต้องอยู่ระหว่าง 35-70 ปี</p>';
-                return;
-            }
-
-            if (hasLab === 'no' && !waist) {
-                resultDiv.innerHTML = '<p style="color: red;">กรุณากรอกรอบเอว</p>';
-                return;
-            }
-
-            if (hasLab === 'yes' && !cholesterol) {
-                resultDiv.innerHTML = '<p style="color: red;">กรุณากรอกโคเลสเตอรอล</p>';
-                return;
-            }
-
-            // คำนวณคะแนนความเสี่ยง (แบบง่าย)
-            let riskScore = 0;
-            
-            // อายุ
-            if (age >= 35 && age < 45) riskScore += 1;
-            else if (age >= 45 && age < 55) riskScore += 2;
-            else if (age >= 55 && age < 65) riskScore += 3;
-            else if (age >= 65) riskScore += 4;
-
-            // เพศ
-            if (gender === 'male') riskScore += 1;
-
-            // สูบบุหรี่
-            if (smoking === 'yes') riskScore += 2;
-
-            // เบาหวาน
-            if (diabetes === 'yes') riskScore += 2;
-
-            // ความดันโลหิต
-            if (sbp >= 140) riskScore += 2;
-            else if (sbp >= 120) riskScore += 1;
-
-            // รอบเอวหรือโคเลสเตอรอล
-            if (hasLab === 'no') {
-                if (gender === 'male' && waist >= 90) riskScore += 1;
-                else if (gender === 'female' && waist >= 80) riskScore += 1;
-            } else {
-                if (cholesterol >= 240) riskScore += 2;
-                else if (cholesterol >= 200) riskScore += 1;
-            }
-
-            // คำนวณเปอร์เซ็นต์ความเสี่ยง
-            let riskPercentage = 0;
-            if (riskScore <= 2) riskPercentage = 1;
-            else if (riskScore <= 4) riskPercentage = 3;
-            else if (riskScore <= 6) riskPercentage = 8;
-            else if (riskScore <= 8) riskPercentage = 15;
-            else if (riskScore <= 10) riskPercentage = 25;
-            else riskPercentage = 35;
-
-            let riskLevel = '';
-            let riskColor = '';
-            let recommendation = '';
-
-            if (riskPercentage < 5) {
-                riskLevel = 'ต่ำ';
-                riskColor = 'green';
-                recommendation = 'ควรรักษาสุขภาพให้ดีต่อไป';
-            } else if (riskPercentage < 15) {
-                riskLevel = 'ปานกลาง';
-                riskColor = 'orange';
-                recommendation = 'ควรปรับเปลี่ยนพฤติกรรมและปรึกษาแพทย์';
-            } else {
-                riskLevel = 'สูง';
-                riskColor = 'red';
-                recommendation = 'ควรปรึกษาแพทย์เพื่อรับการรักษา';
-            }
-
-            resultDiv.innerHTML = `
-                <h4>ผลการประเมินความเสี่ยง</h4>
-                <p><strong>ความเสี่ยงต่อการเกิดโรคเส้นเลือดหัวใจและหลอดเลือดในระยะเวลา 10 ปี: ${riskPercentage}%</strong></p>
-                <p style="color: ${riskColor}; font-weight: bold;">ระดับความเสี่ยง: ${riskLevel}</p>
-                <p><strong>คำแนะนำ:</strong> ${recommendation}</p>
-                <div style="margin-top: 15px; padding: 10px; background: #f0f8ff; border-radius: 5px;">
-                    <p><strong>📋 หมายเหตุ:</strong></p>
-                    <p>• ผลการประเมินนี้เป็นเพียงการประมาณการเบื้องต้น</p>
-                    <p>• ควรปรึกษาแพทย์เพื่อการประเมินที่แม่นยำ</p>
-                    <p>• แบบประเมินนี้ใช้ได้เฉพาะคนไทยอายุ 35-70 ปี</p>
-                    <p>• อ้างอิง: <a href="https://www.rama.mahidol.ac.th/cardio_vascular_risk/thai_cv_risk_score/" target="_blank">โรงพยาบาลรามาธิบดี</a></p>
-                </div>
-            `;
-        }
-
-        // แสดง/ซ่อน input ตามการเลือกผลเลือด
-        document.getElementById('cv-lab').addEventListener('change', function() {
-            const waistInput = document.getElementById('cv-waist');
-            const cholesterolInput = document.getElementById('cv-cholesterol');
-            
-            if (this.value === 'no') {
-                waistInput.style.display = 'block';
-                cholesterolInput.style.display = 'none';
-                cholesterolInput.value = '';
-            } else if (this.value === 'yes') {
-                waistInput.style.display = 'none';
-                cholesterolInput.style.display = 'block';
-                waistInput.value = '';
-            } else {
-                waistInput.style.display = 'none';
-                cholesterolInput.style.display = 'none';
-            }
-        });
 
         // เพิ่มการทำงานของปุ่ม Enter ในฟิลด์ input
         document.addEventListener('DOMContentLoaded', function() {
