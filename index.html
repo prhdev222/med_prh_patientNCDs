@@ -1518,10 +1518,37 @@
             <!-- คำนวณคาร์บ -->
             <div class="calculator">
                 <h3>🍚 เครื่องคำนวณนับคาร์บ (Carb Counting)</h3>
-                <p><strong>วางแผนการฉันคาร์โบไฮเดรต</strong></p>
+                <p><strong>ค้นหาปริมาณคาร์โบไฮเดรตในอาหารต่างๆ</strong></p>
+                <p><em>อ้างอิง: หนังสือนับคาร์บ และ <a href="http://www.xn--42c5bdb8bzej3s.com/" target="_blank">www.นับคาร์บ.com</a></em></p>
                 
                 <div class="info-box">
-                    <h4>🔗 ลิงก์เครื่องคำนวณนับคาร์บ</h4>
+                    <h4>🔍 ค้นหาอาหารและปริมาณคาร์บ</h4>
+                    <input type="text" id="carb-search" placeholder="พิมพ์ชื่ออาหาร เช่น ข้าวสวย, ขนมปัง, แอปเปิ้ล" style="width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                    <button onclick="searchCarb()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; margin: 10px 5px; transition: all 0.3s ease;">🔍 ค้นหา</button>
+                    <button onclick="showAllCarbs()" style="background: linear-gradient(135deg, #ff6b35 0%, #ff9a56 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; margin: 10px 5px; transition: all 0.3s ease;">📋 ดูทั้งหมด</button>
+                </div>
+                
+                <div id="carb-result" class="result"></div>
+                
+                <div id="carb-categories" style="display: none;">
+                    <h4>📂 หมวดหมู่อาหาร</h4>
+                    <div style="display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap;">
+                        <button onclick="filterCarbs('ข้าวและแป้ง')" class="category-btn" data-category="ข้าวและแป้ง">🍚 ข้าวและแป้ง</button>
+                        <button onclick="filterCarbs('ผลไม้')" class="category-btn" data-category="ผลไม้">🍎 ผลไม้</button>
+                        <button onclick="filterCarbs('นมและผลิตภัณฑ์')" class="category-btn" data-category="นมและผลิตภัณฑ์">🥛 นมและผลิตภัณฑ์</button>
+                        <button onclick="filterCarbs('ขนมและของหวาน')" class="category-btn" data-category="ขนมและของหวาน">🍰 ขนมและของหวาน</button>
+                        <button onclick="filterCarbs('เครื่องดื่ม')" class="category-btn" data-category="เครื่องดื่ม">🥤 เครื่องดื่ม</button>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h4>📊 หน่วยการนับคาร์บ</h4>
+                    <p><strong>1 คาร์บยูนิต = 15 กรัมคาร์โบไฮเดรต</strong></p>
+                    <p>ใช้เป็นมาตรฐานในการคำนวณปริมาณคาร์บในอาหาร</p>
+                </div>
+                
+                <div class="info-box">
+                    <h4>🔗 ลิงก์เครื่องคำนวณนับคาร์บเพิ่มเติม</h4>
                     <p>คลิกที่ลิงก์ด้านล่างเพื่อไปยังเครื่องคำนวณนับคาร์บที่สมบูรณ์:</p>
                     <div style="text-align: center; margin: 20px 0;">
                         <a href="http://www.xn--42c5bdb8bzej3s.com/" target="_blank" 
@@ -1532,9 +1559,8 @@
                             🍚 ไปยังเครื่องคำนวณนับคาร์บ
                         </a>
                     </div>
-                    <p><em>อ้างอิง : <a href="http://www.xn--42c5bdb8bzej3s.com/" target="_blank">www.นับคาร์บ.com</a></em></p>
                 </div>
-                </div>
+            </div>
 
             <!-- คำนวณแคลอรี่อาหารไทย -->
             <div class="calculator">
@@ -1880,6 +1906,61 @@
 
 
 
+        // ฐานข้อมูลคาร์โบไฮเดรตจากหนังสือนับคาร์บ
+        const carbDatabase = [
+            // ข้าวและแป้ง
+            { name: "ข้าวสวย", carbs: 15, unit: "1 ทัพพี", carbUnits: 1, category: "ข้าวและแป้ง" },
+            { name: "ข้าวกล้อง", carbs: 15, unit: "1 ทัพพี", carbUnits: 1, category: "ข้าวและแป้ง" },
+            { name: "ขนมปัง", carbs: 15, unit: "1 แผ่น", carbUnits: 1, category: "ข้าวและแป้ง" },
+            { name: "ก๋วยเตี๋ยว", carbs: 30, unit: "1 ชาม", carbUnits: 2, category: "ข้าวและแป้ง" },
+            { name: "สปาเก็ตตี้", carbs: 45, unit: "1 จาน", carbUnits: 3, category: "ข้าวและแป้ง" },
+            { name: "บะหมี่", carbs: 30, unit: "1 ชาม", carbUnits: 2, category: "ข้าวและแป้ง" },
+            { name: "ขนมจีน", carbs: 30, unit: "1 จาน", carbUnits: 2, category: "ข้าวและแป้ง" },
+            { name: "ข้าวโพด", carbs: 15, unit: "1 ฝักเล็ก", carbUnits: 1, category: "ข้าวและแป้ง" },
+            { name: "มันฝรั่ง", carbs: 15, unit: "1 หัวเล็ก", carbUnits: 1, category: "ข้าวและแป้ง" },
+            { name: "มันเทศ", carbs: 15, unit: "1 หัวเล็ก", carbUnits: 1, category: "ข้าวและแป้ง" },
+            
+            // ผลไม้
+            { name: "แอปเปิ้ล", carbs: 15, unit: "1 ลูกเล็ก", carbUnits: 1, category: "ผลไม้" },
+            { name: "กล้วย", carbs: 15, unit: "1 ลูกเล็ก", carbUnits: 1, category: "ผลไม้" },
+            { name: "ส้ม", carbs: 15, unit: "1 ลูกกลาง", carbUnits: 1, category: "ผลไม้" },
+            { name: "มะละกอ", carbs: 15, unit: "1 ชิ้นใหญ่", carbUnits: 1, category: "ผลไม้" },
+            { name: "สับปะรด", carbs: 15, unit: "1 ชิ้นใหญ่", carbUnits: 1, category: "ผลไม้" },
+            { name: "แตงโม", carbs: 15, unit: "1 ชิ้นใหญ่", carbUnits: 1, category: "ผลไม้" },
+            { name: "องุ่น", carbs: 15, unit: "15 ผล", carbUnits: 1, category: "ผลไม้" },
+            { name: "มะม่วง", carbs: 15, unit: "1/2 ผล", carbUnits: 1, category: "ผลไม้" },
+            { name: "ฝรั่ง", carbs: 15, unit: "1/2 ผล", carbUnits: 1, category: "ผลไม้" },
+            { name: "ลิ้นจี่", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "ผลไม้" },
+            { name: "ลำใย", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "ผลไม้" },
+            { name: "เงาะ", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "ผลไม้" },
+            
+            // นมและผลิตภัณฑ์
+            { name: "นม", carbs: 12, unit: "1 แก้ว (240 มล.)", carbUnits: 0.8, category: "นมและผลิตภัณฑ์" },
+            { name: "โยเกิร์ต", carbs: 15, unit: "1 ถ้วย", carbUnits: 1, category: "นมและผลิตภัณฑ์" },
+            { name: "นมเปรี้ยว", carbs: 15, unit: "1 ขวด", carbUnits: 1, category: "นมและผลิตภัณฑ์" },
+            { name: "นมถั่วเหลือง", carbs: 15, unit: "1 แก้ว", carbUnits: 1, category: "นมและผลิตภัณฑ์" },
+            
+            // ขนมและของหวาน
+            { name: "เค้ก", carbs: 30, unit: "1 ชิ้นเล็ก", carbUnits: 2, category: "ขนมและของหวาน" },
+            { name: "คุกกี้", carbs: 15, unit: "2 ชิ้น", carbUnits: 1, category: "ขนมและของหวาน" },
+            { name: "โดนัท", carbs: 30, unit: "1 ชิ้น", carbUnits: 2, category: "ขนมและของหวาน" },
+            { name: "ไอศกรีม", carbs: 15, unit: "1 ก้อน", carbUnits: 1, category: "ขนมและของหวาน" },
+            { name: "ช็อกโกแลต", carbs: 15, unit: "1 ชิ้นเล็ก", carbUnits: 1, category: "ขนมและของหวาน" },
+            { name: "ลูกอม", carbs: 15, unit: "5 เม็ด", carbUnits: 1, category: "ขนมและของหวาน" },
+            { name: "ขนมถ้วย", carbs: 15, unit: "1 ถ้วย", carbUnits: 1, category: "ขนมและของหวาน" },
+            { name: "ขนมครก", carbs: 15, unit: "1 ชิ้น", carbUnits: 1, category: "ขนมและของหวาน" },
+            
+            // เครื่องดื่ม
+            { name: "น้ำอัดลม", carbs: 40, unit: "1 กระป๋อง", carbUnits: 2.7, category: "เครื่องดื่ม" },
+            { name: "น้ำผลไม้", carbs: 30, unit: "1 แก้ว", carbUnits: 2, category: "เครื่องดื่ม" },
+            { name: "ชาเขียวหวาน", carbs: 25, unit: "1 ขวด", carbUnits: 1.7, category: "เครื่องดื่ม" },
+            { name: "กาแฟเย็น", carbs: 30, unit: "1 แก้ว", carbUnits: 2, category: "เครื่องดื่ม" },
+            { name: "ชานมไข่มุก", carbs: 45, unit: "1 แก้ว", carbUnits: 3, category: "เครื่องดื่ม" },
+            { name: "น้ำมะนาว", carbs: 5, unit: "1 แก้ว", carbUnits: 0.3, category: "เครื่องดื่ม" },
+            { name: "น้ำอัญชัน", carbs: 5, unit: "1 แก้ว", carbUnits: 0.3, category: "เครื่องดื่ม" },
+            { name: "น้ำใบเตย", carbs: 5, unit: "1 แก้ว", carbUnits: 0.3, category: "เครื่องดื่ม" }
+        ];
+
         // ฐานข้อมูลอาหารไทยจาก HDmall
         const thaiFoodDatabase = [
             // อาหารหลัก
@@ -1972,6 +2053,101 @@
             { name: "คุกกี้", calories: 50, unit: "1 ชิ้น", category: "ขนม" },
             { name: "บิสกิต", calories: 45, unit: "1 ชิ้น", category: "ขนม" }
         ];
+
+        // ฟังก์ชันสำหรับเครื่องคำนวณนับคาร์บ
+        function searchCarb() {
+            const searchTerm = document.getElementById('carb-search').value.toLowerCase().trim();
+            const resultDiv = document.getElementById('carb-result');
+            const categoriesDiv = document.getElementById('carb-categories');
+            
+            if (!searchTerm) {
+                resultDiv.innerHTML = '<p style="color: red;">กรุณาพิมพ์ชื่ออาหารที่ต้องการค้นหา</p>';
+                return;
+            }
+
+            const results = carbDatabase.filter(food => 
+                food.name.toLowerCase().includes(searchTerm)
+            );
+            
+            if (results.length === 0) {
+                resultDiv.innerHTML = `
+                    <p style="color: red;">ไม่พบอาหารที่ค้นหา: "${searchTerm}"</p>
+                    <p>ลองค้นหาด้วยคำอื่น เช่น "ข้าว", "ขนมปัง", "แอปเปิ้ล"</p>
+                `;
+                categoriesDiv.style.display = 'none';
+                return;
+            }
+
+            displayCarbResults(results, `ผลการค้นหา: "${searchTerm}"`);
+            categoriesDiv.style.display = 'block';
+        }
+
+        function showAllCarbs() {
+            const resultDiv = document.getElementById('carb-result');
+            const categoriesDiv = document.getElementById('carb-categories');
+            
+            displayCarbResults(carbDatabase, 'รายการอาหารทั้งหมด');
+            categoriesDiv.style.display = 'block';
+        }
+
+        function filterCarbs(category) {
+            const resultDiv = document.getElementById('carb-result');
+            const filteredFoods = carbDatabase.filter(food => food.category === category);
+            
+            // อัพเดต active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            displayCarbResults(filteredFoods, `หมวดหมู่: ${category}`);
+        }
+
+        function displayCarbResults(foods, title) {
+            const resultDiv = document.getElementById('carb-result');
+            
+            let html = `<h4>${title} (${foods.length} รายการ)</h4>`;
+            
+            // จัดกลุ่มตามหมวดหมู่
+            const groupedFoods = {};
+            foods.forEach(food => {
+                if (!groupedFoods[food.category]) {
+                    groupedFoods[food.category] = [];
+                }
+                groupedFoods[food.category].push(food);
+            });
+            
+            Object.keys(groupedFoods).forEach(category => {
+                html += `<h5 style="color: #2c3e50; margin-top: 20px; margin-bottom: 10px;">${getCarbCategoryIcon(category)} ${category}</h5>`;
+                groupedFoods[category].forEach(food => {
+                    html += `
+                        <div class="food-item">
+                            <div>
+                                <div class="food-name">${food.name}</div>
+                                <div class="food-category">${food.unit}</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="color: #e74c3c; font-weight: bold; font-size: 1.1rem;">${food.carbs} กรัม</div>
+                                <div style="color: #27ae60; font-weight: bold;">${food.carbUnits} คาร์บยูนิต</div>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+            
+            resultDiv.innerHTML = html;
+        }
+
+        function getCarbCategoryIcon(category) {
+            const icons = {
+                'ข้าวและแป้ง': '🍚',
+                'ผลไม้': '🍎',
+                'นมและผลิตภัณฑ์': '🥛',
+                'ขนมและของหวาน': '🍰',
+                'เครื่องดื่ม': '🥤'
+            };
+            return icons[category] || '🍽️';
+        }
 
         function searchFood() {
             const searchTerm = document.getElementById('food-search').value.toLowerCase().trim();
@@ -2074,10 +2250,17 @@
             inputs.forEach(input => {
                 input.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
-                        // หาปุ่มที่อยู่ในกลุ่มเดียวกันและคลิก
-                        const button = this.parentElement.querySelector('button');
-                        if (button) {
-                            button.click();
+                        // ตรวจสอบว่าเป็นช่องค้นหาคาร์บหรือไม่
+                        if (this.id === 'carb-search') {
+                            searchCarb();
+                        } else if (this.id === 'food-search') {
+                            searchFood();
+                        } else {
+                            // หาปุ่มที่อยู่ในกลุ่มเดียวกันและคลิก
+                            const button = this.parentElement.querySelector('button');
+                            if (button) {
+                                button.click();
+                            }
                         }
                     }
                 });
