@@ -1527,17 +1527,21 @@
                     <button onclick="searchCarb()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; margin: 10px 5px; transition: all 0.3s ease;">🔍 ค้นหา</button>
                     <button onclick="showAllCarbs()" style="background: linear-gradient(135deg, #ff6b35 0%, #ff9a56 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; margin: 10px 5px; transition: all 0.3s ease;">📋 ดูทั้งหมด</button>
                 </div>
-                
+
                 <div id="carb-result" class="result"></div>
                 
                 <div id="carb-categories" style="display: none;">
                     <h4>📂 หมวดหมู่อาหาร</h4>
                     <div style="display: flex; gap: 10px; margin: 10px 0; flex-wrap: wrap;">
-                        <button onclick="filterCarbs('ข้าวและแป้ง')" class="category-btn" data-category="ข้าวและแป้ง">🍚 ข้าวและแป้ง</button>
-                        <button onclick="filterCarbs('ผลไม้')" class="category-btn" data-category="ผลไม้">🍎 ผลไม้</button>
-                        <button onclick="filterCarbs('นมและผลิตภัณฑ์')" class="category-btn" data-category="นมและผลิตภัณฑ์">🥛 นมและผลิตภัณฑ์</button>
-                        <button onclick="filterCarbs('ขนมและของหวาน')" class="category-btn" data-category="ขนมและของหวาน">🍰 ขนมและของหวาน</button>
-                        <button onclick="filterCarbs('เครื่องดื่ม')" class="category-btn" data-category="เครื่องดื่ม">🥤 เครื่องดื่ม</button>
+                        <button onclick="filterCarbs('หมวดข้าวแป้งและผลิตภัณฑ์')" class="category-btn" data-category="หมวดข้าวแป้งและผลิตภัณฑ์">🍚 ข้าวแป้ง</button>
+                        <button onclick="filterCarbs('หมวดผลไม้')" class="category-btn" data-category="หมวดผลไม้">🍎 ผลไม้</button>
+                        <button onclick="filterCarbs('หมวดผักที่มีแป้ง')" class="category-btn" data-category="หมวดผักที่มีแป้ง">🥬 ผักมีแป้ง</button>
+                        <button onclick="filterCarbs('หมวดนมและผลิตภัณฑ์จากนม')" class="category-btn" data-category="หมวดนมและผลิตภัณฑ์จากนม">🥛 นม</button>
+                        <button onclick="filterCarbs('หมวดขนมหวานและเบเกอรี')" class="category-btn" data-category="หมวดขนมหวานและเบเกอรี">🍰 ขนมหวาน</button>
+                        <button onclick="filterCarbs('หมวดอาหารจานเดียว')" class="category-btn" data-category="หมวดอาหารจานเดียว">🍽️ อาหารจานเดียว</button>
+                        <button onclick="filterCarbs('หมวดเครื่องดื่ม')" class="category-btn" data-category="หมวดเครื่องดื่ม">🥤 เครื่องดื่ม</button>
+                        <button onclick="filterCarbs('หมวดเครื่องปรุงรส')" class="category-btn" data-category="หมวดเครื่องปรุงรส">🧂 เครื่องปรุง</button>
+                        <button onclick="filterCarbs('หมวดอาหารที่ไม่มีคาร์บ')" class="category-btn" data-category="หมวดอาหารที่ไม่มีคาร์บ">🥬 ไม่มีคาร์บ</button>
                     </div>
                 </div>
                 
@@ -1913,58 +1917,296 @@
 
 
 
-        // ฐานข้อมูลคาร์โบไฮเดรตจากหนังสือนับคาร์บ
+        // ฐานข้อมูลคาร์โบไฮเดรตจากหนังสือนับคาร์บ (อัปเดตใหม่)
         const carbDatabase = [
-            // ข้าวและแป้ง
-            { name: "ข้าวสวย", carbs: 15, unit: "1 ทัพพี", carbUnits: 1, category: "ข้าวและแป้ง" },
-            { name: "ข้าวกล้อง", carbs: 15, unit: "1 ทัพพี", carbUnits: 1, category: "ข้าวและแป้ง" },
-            { name: "ขนมปัง", carbs: 15, unit: "1 แผ่น", carbUnits: 1, category: "ข้าวและแป้ง" },
-            { name: "ก๋วยเตี๋ยว", carbs: 30, unit: "1 ชาม", carbUnits: 2, category: "ข้าวและแป้ง" },
-            { name: "สปาเก็ตตี้", carbs: 45, unit: "1 จาน", carbUnits: 3, category: "ข้าวและแป้ง" },
-            { name: "บะหมี่", carbs: 30, unit: "1 ชาม", carbUnits: 2, category: "ข้าวและแป้ง" },
-            { name: "ขนมจีน", carbs: 30, unit: "1 จาน", carbUnits: 2, category: "ข้าวและแป้ง" },
-            { name: "ข้าวโพด", carbs: 15, unit: "1 ฝักเล็ก", carbUnits: 1, category: "ข้าวและแป้ง" },
-            { name: "มันฝรั่ง", carbs: 15, unit: "1 หัวเล็ก", carbUnits: 1, category: "ข้าวและแป้ง" },
-            { name: "มันเทศ", carbs: 15, unit: "1 หัวเล็ก", carbUnits: 1, category: "ข้าวและแป้ง" },
+            // หมวดข้าวแป้งและผลิตภัณฑ์
+            { name: "ข้าวซ้อมมือ (สวย) / ข้าวขาว (สวย)", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ข้าวเหนียว", carbs: 18, unit: "1/2 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ข้าวต้ม", carbs: 18, unit: "2 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "โจ๊ก", carbs: 18, unit: "2 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ควินัวสุก", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ข้าวโอ๊ต", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ลูกเดือยสุก", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "มุสลี", carbs: 18, unit: "4 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "เส้นหมี่สุก / เส้นก๋วยเตี๋ยวสุก", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "วุ้นเส้นลวก", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "เส้นใหญ่ (ลวก)", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "เส้นขนมจีน", carbs: 18, unit: "1 จับ", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "เส้นก๋วยจั๊บสุก", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "เส้นก๋วยจั๊บญวนสุก", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "บะหมี่ (1/2 ก้อน)", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "บะหมี่ญี่ปุ่น (อุดัง)", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "พาสต้า", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "มักกะโรนี (สุก)", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "เผือก (ต้ม) / มัน (ต้ม)", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "สาคูเม็ดเล็ก (สุก)", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "สาคูเม็ดใหญ่ (สุก)", carbs: 18, unit: "5 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ฟักทอง (สุก)", carbs: 18, unit: "1 ทัพพี", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "มันฝรั่งทั้งเปลือก (ปิ้ง / เผา)", carbs: 18, unit: "1/4 หัวใหญ่", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "มันฝรั่งบด", carbs: 18, unit: "1/2 ถ้วยตวง", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "มันแกว", carbs: 18, unit: "2 หัวเล็ก", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "แห้ว (สุก)", carbs: 18, unit: "1/2 ถ้วยตวง", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ข้าวโพด (สุก)", carbs: 18, unit: "1/2 ฝักกลาง", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "แครกเกอร์แผ่นกลม", carbs: 18, unit: "6 แผ่น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "บิสกิต Ø 2 1/2 นิ้ว", carbs: 18, unit: "1 ชิ้น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ขนมปังกรอบรูปสัตว์", carbs: 18, unit: "8 ชิ้น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "แป้งสาลี/แป้งทำขนม/แป้งมันสำปะหลัง", carbs: 18, unit: "3 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "เมล็ดเกาลัดจีนคั่ว", carbs: 18, unit: "6 เม็ด", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ซีเรียลไม่เคลือบน้ำตาล", carbs: 18, unit: "3/4 ถ้วยตวง", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ซีเรียลเคลือบน้ำตาล", carbs: 18, unit: "1/2 ถ้วยตวง", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ข้าวโพดคั่วไม่ใส่เนย", carbs: 18, unit: "3 ถ้วยตวง", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ขนมปังโฮลวีต / ขนมปังสีขาว", carbs: 18, unit: "1 แผ่น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ขนมปังแฮมเบอร์เกอร์ / ฮอทด็อก", carbs: 18, unit: "1/2 คู่", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ขนมปังก้อนกลม (ดินเนอร์โรล)", carbs: 18, unit: "1 ก้อน", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ขนมปังเบเกิ้ล", carbs: 18, unit: "1/4 ชิ้น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "อิงลิชมัฟฟิน", carbs: 18, unit: "1/2 ชิ้น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "หมั่นโถว (ขนาดกลาง)", carbs: 18, unit: "2/3 ลูก", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ขนมปังพีต้า Ø 6 นิ้ว", carbs: 18, unit: "1/2 แผ่น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "ขนมปังนาน (Naan)", carbs: 18, unit: "1/4 แผ่น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "แป้งทาโก้ Ø 5 นิ้ว", carbs: 18, unit: "2 แผ่น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "แป้งตอร์ตีญ่า", carbs: 18, unit: "1 แผ่น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "แป้งข้าวโพดตอร์ตีญ่า Ø 6 นิ้ว", carbs: 18, unit: "1 แผ่น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "แป้งโรตีย่าง (จาปาตี)", carbs: 18, unit: "1 แผ่นเล็ก", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "แป้งเปาะเปี๊ยะ", carbs: 18, unit: "1 แผ่น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "แผ่นปอเปี๊ยะญวน (ลุยสวน)", carbs: 18, unit: "2 แผ่น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
+            { name: "แป้งเกี๊ยว", carbs: 18, unit: "4 แผ่น", carbUnits: 1, category: "หมวดข้าวแป้งและผลิตภัณฑ์" },
             
-            // ผลไม้
-            { name: "แอปเปิ้ล", carbs: 15, unit: "1 ลูกเล็ก", carbUnits: 1, category: "ผลไม้" },
-            { name: "กล้วย", carbs: 15, unit: "1 ลูกเล็ก", carbUnits: 1, category: "ผลไม้" },
-            { name: "ส้ม", carbs: 15, unit: "1 ลูกกลาง", carbUnits: 1, category: "ผลไม้" },
-            { name: "มะละกอ", carbs: 15, unit: "1 ชิ้นใหญ่", carbUnits: 1, category: "ผลไม้" },
-            { name: "สับปะรด", carbs: 15, unit: "1 ชิ้นใหญ่", carbUnits: 1, category: "ผลไม้" },
-            { name: "แตงโม", carbs: 15, unit: "1 ชิ้นใหญ่", carbUnits: 1, category: "ผลไม้" },
-            { name: "องุ่น", carbs: 15, unit: "15 ผล", carbUnits: 1, category: "ผลไม้" },
-            { name: "มะม่วง", carbs: 15, unit: "1/2 ผล", carbUnits: 1, category: "ผลไม้" },
-            { name: "ฝรั่ง", carbs: 15, unit: "1/2 ผล", carbUnits: 1, category: "ผลไม้" },
-            { name: "ลิ้นจี่", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "ผลไม้" },
-            { name: "ลำใย", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "ผลไม้" },
-            { name: "เงาะ", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "ผลไม้" },
+            // หมวดผลไม้
+            { name: "กล้วยน้ำว้า", carbs: 15, unit: "1 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "กล้วยหอม ขนาด 9 นิ้ว", carbs: 15, unit: "1/2 ผลกลาง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "กีวี", carbs: 15, unit: "1 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "แก้วมังกร", carbs: 15, unit: "1/2 ผลกลาง หรือ 8 ชิ้นคำ", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ขนุน", carbs: 15, unit: "3 ยวง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "แคนตาลูป", carbs: 15, unit: "8 ชิ้นคำ", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "เงาะ", carbs: 15, unit: "4 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ชมพู่เมืองเพชร", carbs: 15, unit: "3 ผลกลาง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "เชอรี่", carbs: 15, unit: "12 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "แตงไทย", carbs: 15, unit: "20 ชิ้นคำ", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "แตงโม", carbs: 15, unit: "8 ชิ้นคำ", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ทุเรียน", carbs: 15, unit: "1 เม็ดเล็ก", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "น้อยหน่า", carbs: 15, unit: "1/2 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ฝรั่ง", carbs: 15, unit: "1 ผลเล็ก หรือ 1/2 ผลกลาง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "พรุน", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "พืชสด", carbs: 15, unit: "1 ผลกลาง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "พุทราไทย", carbs: 15, unit: "5 ผลกลาง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มะกอกฝรั่ง", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มะขามเทศ", carbs: 15, unit: "3 ฝัก", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มะขามหวาน", carbs: 15, unit: "1-2 ฝักใหญ่", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มะปราง", carbs: 15, unit: "2 ผลกลาง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มะเฟือง", carbs: 15, unit: "1 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มะไฟ", carbs: 15, unit: "15 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มะม่วงดิบ", carbs: 15, unit: "1/2 ผลกลาง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มะม่วงสุก", carbs: 15, unit: "1/2 ผลเล็ก", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มะยงชิด", carbs: 15, unit: "2 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มะละกอสุก", carbs: 15, unit: "8 ชิ้นคำ", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "มังคุด", carbs: 15, unit: "4 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ระกำ", carbs: 15, unit: "6 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ลองกอง", carbs: 15, unit: "6-8 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ละมุด", carbs: 15, unit: "1 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ลางสาด", carbs: 15, unit: "6-8 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ลำไย", carbs: 15, unit: "5-6 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ลิ้นจี่ (ผลเล็ก)", carbs: 15, unit: "6 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ลิ้นจี่จักรพรรดิ", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ลูกเกด", carbs: 15, unit: "2 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ลูกตาลสด", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ลูกพลับ", carbs: 15, unit: "1/2 ผลใหญ่", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ลูกหว้า", carbs: 15, unit: "1 ถ้วยตวง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "สตรอเบอรี", carbs: 15, unit: "8-10 ผลเล็ก", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ส้มเขียวหวาน", carbs: 15, unit: "2 ผลกลาง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ส้มเช้ง", carbs: 15, unit: "1 ผลใหญ่", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ส้มสายน้ำผึ้ง", carbs: 15, unit: "2 ผลเล็ก", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "ส้มโอทองดี", carbs: 15, unit: "2-3 กลีบกลาง", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "สละ", carbs: 15, unit: "6 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "สับปะรดสด", carbs: 15, unit: "8 ชิ้นคำ", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "สาลี่หอม", carbs: 15, unit: "1 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "องุ่นแดง (นอก)", carbs: 15, unit: "17 ผลเล็ก หรือ 6 ผลใหญ่", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "อินทผลัมแห้ง", carbs: 15, unit: "3 ผล", carbUnits: 1, category: "หมวดผลไม้" },
+            { name: "แอปเปิ้ล", carbs: 15, unit: "1 ผลเล็ก", carbUnits: 1, category: "หมวดผลไม้" },
             
-            // นมและผลิตภัณฑ์
-            { name: "นม", carbs: 12, unit: "1 แก้ว (240 มล.)", carbUnits: 0.8, category: "นมและผลิตภัณฑ์" },
-            { name: "โยเกิร์ต", carbs: 15, unit: "1 ถ้วย", carbUnits: 1, category: "นมและผลิตภัณฑ์" },
-            { name: "นมเปรี้ยว", carbs: 15, unit: "1 ขวด", carbUnits: 1, category: "นมและผลิตภัณฑ์" },
-            { name: "นมถั่วเหลือง", carbs: 15, unit: "1 แก้ว", carbUnits: 1, category: "นมและผลิตภัณฑ์" },
+            // หมวดผักที่มีแป้ง
+            { name: "หน่อไม้ฝรั่ง", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "สะตอ", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "ดอกกะหล่ำ", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "แครอท", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "ถั่วลันเตา (ฝัก) / ถั่วลันเตาหวาน", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "ถั่วงอกหัวโต", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "มะเขือเปราะ", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "ถั่วฝักยาว", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "บร็อคโคลี", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "กะหล่ำปลี", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "มะละกอดิบ", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "ข้าวโพดอ่อน", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "ผักคะน้า", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "แขนงคะน้า", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "ดอกแค", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "คะน้าฮ่องกง (บร็อคโคลีจีน)", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "กระเจี๊ยบ (ผล)", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "มะระ", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "หัวปลี", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
+            { name: "ขนุนอ่อน", carbs: 5, unit: "1 ทัพพี", carbUnits: 0.3, category: "หมวดผักที่มีแป้ง" },
             
-            // ขนมและของหวาน
-            { name: "เค้ก", carbs: 30, unit: "1 ชิ้นเล็ก", carbUnits: 2, category: "ขนมและของหวาน" },
-            { name: "คุกกี้", carbs: 15, unit: "2 ชิ้น", carbUnits: 1, category: "ขนมและของหวาน" },
-            { name: "โดนัท", carbs: 30, unit: "1 ชิ้น", carbUnits: 2, category: "ขนมและของหวาน" },
-            { name: "ไอศกรีม", carbs: 15, unit: "1 ก้อน", carbUnits: 1, category: "ขนมและของหวาน" },
-            { name: "ช็อกโกแลต", carbs: 15, unit: "1 ชิ้นเล็ก", carbUnits: 1, category: "ขนมและของหวาน" },
-            { name: "ลูกอม", carbs: 15, unit: "5 เม็ด", carbUnits: 1, category: "ขนมและของหวาน" },
-            { name: "ขนมถ้วย", carbs: 15, unit: "1 ถ้วย", carbUnits: 1, category: "ขนมและของหวาน" },
-            { name: "ขนมครก", carbs: 15, unit: "1 ชิ้น", carbUnits: 1, category: "ขนมและของหวาน" },
+            // หมวดนมและผลิตภัณฑ์จากนม
+            { name: "นมข้นจืดไขมัน 2% (เสริมวิตามินเอและดี)", carbs: 20, unit: "1/2 ถ้วยตวง", carbUnits: 1.3, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมไขมัน 1%", carbs: 12, unit: "1 แก้ว", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมไขมัน 2%", carbs: 12, unit: "1 แก้ว", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมไขมัน 2% (ผสมนมขาดมันเนย)", carbs: 13, unit: "1 แก้ว", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมควาย", carbs: 10, unit: "1 แก้ว", carbUnits: 0.7, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมคืนรูป UHT รสจืด", carbs: 13, unit: "200 มล.", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมคืนรูป UHT รสหวาน", carbs: 16, unit: "200 มล.", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมแพะ UHT", carbs: 8, unit: "1 กล่อง", carbUnits: 0.5, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมข้นหวาน", carbs: 11, unit: "1 ช้อนโต๊ะ", carbUnits: 0.7, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมผง (ฟูลครีม)", carbs: 11, unit: "4 ช้อนโต๊ะ", carbUnits: 0.7, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมผงขาดมันเนย", carbs: 12, unit: "4 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมผงพร่องมันเนย (เสริมแคลเซียม)", carbs: 13, unit: "4 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมระเหยหรือนมข้นจืด", carbs: 11, unit: "1/2 ถ้วยตวง", carbUnits: 0.7, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมสดจืดขาดมันเนย", carbs: 14, unit: "1 ขวด", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมสดจืดไขมันเต็มส่วน (นมครบส่วน)", carbs: 12, unit: "1 แก้ว", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมสดจืดพร่องมันเนย", carbs: 12, unit: "1 แก้ว", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมจืดสเตอริไลส์", carbs: 7, unit: "1 กระป๋อง", carbUnits: 0.5, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "นมจืดสเตอริไลส์พร่องมันเนย", carbs: 7, unit: "1 กระป๋อง", carbUnits: 0.5, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "โยเกิร์ต 0 % ไขมัน (รสธรรมชาติ)", carbs: 13, unit: "1 ถ้วยเล็ก", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
+            { name: "โยเกิร์ตไขมันต่ำ (รสธรรมชาติ)", carbs: 18, unit: "1 ถ้วยเล็ก", carbUnits: 1, category: "หมวดนมและผลิตภัณฑ์จากนม" },
             
-            // เครื่องดื่ม
-            { name: "น้ำอัดลม", carbs: 40, unit: "1 กระป๋อง", carbUnits: 2.7, category: "เครื่องดื่ม" },
-            { name: "น้ำผลไม้", carbs: 30, unit: "1 แก้ว", carbUnits: 2, category: "เครื่องดื่ม" },
-            { name: "ชาเขียวหวาน", carbs: 25, unit: "1 ขวด", carbUnits: 1.7, category: "เครื่องดื่ม" },
-            { name: "กาแฟเย็น", carbs: 30, unit: "1 แก้ว", carbUnits: 2, category: "เครื่องดื่ม" },
-            { name: "ชานมไข่มุก", carbs: 45, unit: "1 แก้ว", carbUnits: 3, category: "เครื่องดื่ม" },
-            { name: "น้ำมะนาว", carbs: 5, unit: "1 แก้ว", carbUnits: 0.3, category: "เครื่องดื่ม" },
-            { name: "น้ำอัญชัน", carbs: 5, unit: "1 แก้ว", carbUnits: 0.3, category: "เครื่องดื่ม" },
+            // หมวดขนมหวานและเบเกอรี
+            { name: "กล้วยแขก", carbs: 15, unit: "1 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมกล้วย", carbs: 21, unit: "1 ชิ้น", carbUnits: 1.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมครก", carbs: 45, unit: "3 คู่", carbUnits: 3, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมชั้น", carbs: 26, unit: "1 ชิ้น", carbUnits: 1.7, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมตาล", carbs: 15, unit: "1 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมถังแตก", carbs: 57, unit: "1 ชิ้น", carbUnits: 4, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมบัวลอยเผือก", carbs: 30, unit: "1/2 ถ้วยตวง", carbUnits: 2, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมบ้าบิ่น", carbs: 62, unit: "5 ชิ้น", carbUnits: 4, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมเบื้องครีมไส้เค็ม", carbs: 21, unit: "6 ชิ้น", carbUnits: 1.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมปากหม้อ", carbs: 16, unit: "4 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมลอดช่องน้ำกะทิ", carbs: 24, unit: "1/2 ถ้วยตวง", carbUnits: 1.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมลูกชุบ", carbs: 16, unit: "4 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมสาคูไส้หมู", carbs: 16, unit: "4 ลูก", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมใส่ไส้", carbs: 14, unit: "1 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ข้าวต้มมัดไส้กล้วย", carbs: 31, unit: "1 กลีบ", carbUnits: 2, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ข้าวเหนียวปิ้งไส้กล้วย", carbs: 36, unit: "1 ชิ้น", carbUnits: 2.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ข้าวเหนียวมูล", carbs: 8, unit: "1 ช้อนโต๊ะ", carbUnits: 0.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ซาหริ่ม", carbs: 29, unit: "1/2 ถ้วย", carbUnits: 2, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "เต้าทึง", carbs: 45, unit: "1 ถ้วยตวง", carbUnits: 3, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ทุเรียนทอดอบกรอบ", carbs: 18, unit: "1/2 ถ้วยตวง", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ทองม้วน", carbs: 12, unit: "4 ชิ้นกลม", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "บะจ่าง", carbs: 59, unit: "1 ชิ้น", carbUnits: 4, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "บัวลอยน้ำขิง", carbs: 40, unit: "1 ถ้วยตวง", carbUnits: 2.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ปาท่องโก๋", carbs: 9, unit: "1 คู่", carbUnits: 0.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมปังกรอบ (เนย+น้ำตาล)", carbs: 16, unit: "3 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมปังขาไก่รสต่างๆ", carbs: 18, unit: "1/3 ถ้วยตวง", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ขนมปังเนยสด", carbs: 25, unit: "1 ชิ้น", carbUnits: 1.7, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "คัพเค้กแต่งหน้า", carbs: 30, unit: "1 ถ้วยเล็ก", carbUnits: 2, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "คุกกี้เนย", carbs: 10, unit: "3 ชิ้น", carbUnits: 0.7, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "คุกกี้ผสมช็อกโกแลตชิพ", carbs: 30, unit: "3 ชิ้น", carbUnits: 2, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "เค้กกล้วยหอม (สี่เหลี่ยม)", carbs: 38, unit: "1 ชิ้น", carbUnits: 2.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "เค้กชิฟฟอน", carbs: 15, unit: "1 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "เค้กเนย", carbs: 18, unit: "1 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "เค้กผลไม้", carbs: 16, unit: "1 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "เค้กไม่เคลือบน้ำตาล", carbs: 15, unit: "1 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "เจลาติน (เจลโล)", carbs: 18, unit: "1/2 ถ้วยตวง", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ซาลาเปาไส้ครีม (กลาง)", carbs: 26, unit: "1 ลูก", carbUnits: 1.7, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ซาลาเปาไส้หมูสับ (กลาง)", carbs: 20, unit: "1 ลูก", carbUnits: 1.3, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "เดนิส (ชีส)", carbs: 39, unit: "1 ชิ้น", carbUnits: 2.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "โดนัทพอนเดอริงเกรช", carbs: 27, unit: "1 ชิ้น", carbUnits: 2, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "บราวนี่ไม่เคลือบน้ำตาล", carbs: 12, unit: "1 ชิ้นเล็ก", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "พายไก่ (ขนาดกลาง)", carbs: 16, unit: "1 ชิ้น", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "พายผลไม้", carbs: 22, unit: "1 ชิ้น", carbUnits: 1.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "แพนเค้ก", carbs: 14, unit: "50 กรัม", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "มัชกิ้นโดนัท", carbs: 8, unit: "1 ชิ้น", carbUnits: 0.5, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "วาฟเฟิล", carbs: 19, unit: "1 ชิ้น", carbUnits: 1.3, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "เอแคร์ ไส้ครีม", carbs: 14, unit: "4 ลูก", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "โอริโอสอดไส้ครีม", carbs: 20, unit: "3 ชิ้น", carbUnits: 1.3, category: "หมวดขนมหวานและเบเกอรี" },
+            { name: "ไอศกรีม", carbs: 15, unit: "1/2 ถ้วยตวง", carbUnits: 1, category: "หมวดขนมหวานและเบเกอรี" },
+            
+            // หมวดอาหารจานเดียว
+            { name: "บะหมี่น้ำหมูลูกชิ้น", carbs: 36, unit: "1 ชาม", carbUnits: 2, category: "หมวดอาหารจานเดียว" },
+            { name: "ผัดซีอิ๊วหมูใส่ไข่", carbs: 59.4, unit: "1 จาน", carbUnits: 3.3, category: "หมวดอาหารจานเดียว" },
+            { name: "ราดหน้าเส้นใหญ่หมู", carbs: 50.4, unit: "1 จาน", carbUnits: 2.8, category: "หมวดอาหารจานเดียว" },
+            { name: "ก๋วยเตี๋ยวเส้นหมี่ไก่มะระ", carbs: 36, unit: "1 ชาม", carbUnits: 2, category: "หมวดอาหารจานเดียว" },
+            { name: "สุกี้ทะเล", carbs: 30.6, unit: "1 ชาม", carbUnits: 1.7, category: "หมวดอาหารจานเดียว" },
+            { name: "ผัดไทยใส่ไข่", carbs: 54, unit: "1 จาน", carbUnits: 3, category: "หมวดอาหารจานเดียว" },
+            { name: "ข้าวหมกไก่", carbs: 64.8, unit: "1 จาน", carbUnits: 3.6, category: "หมวดอาหารจานเดียว" },
+            { name: "ขนมจีนน้ำยา", carbs: 30.6, unit: "1 จาน", carbUnits: 1.7, category: "หมวดอาหารจานเดียว" },
+            { name: "ข้าวหมูแดง", carbs: 72, unit: "1 จาน", carbUnits: 4, category: "หมวดอาหารจานเดียว" },
+            { name: "ข้าวมันไก่", carbs: 41.4, unit: "1 จาน", carbUnits: 2.3, category: "หมวดอาหารจานเดียว" },
+            { name: "ข้าวผัดหมูใส่ไข่", carbs: 56.7, unit: "1 จาน", carbUnits: 3.15, category: "หมวดอาหารจานเดียว" },
+            { name: "ข้าวกะเพราหมูสับใส่ไข่ดาว", carbs: 56.7, unit: "1 จาน", carbUnits: 3.15, category: "หมวดอาหารจานเดียว" },
+            { name: "ข้าวขาหมู", carbs: 59.4, unit: "1 จาน", carbUnits: 3.3, category: "หมวดอาหารจานเดียว" },
+            { name: "สปาเก็ตตี้คาโบนาร่า", carbs: 41.4, unit: "1 จาน", carbUnits: 2.3, category: "หมวดอาหารจานเดียว" },
+            { name: "ก๋วยจั๊บ", carbs: 41.4, unit: "1 ชาม", carbUnits: 2.3, category: "หมวดอาหารจานเดียว" },
+            { name: "ข้าวคลุกกะปิ", carbs: 48.6, unit: "1 จาน", carbUnits: 2.7, category: "หมวดอาหารจานเดียว" },
+            { name: "ลาซอนญ่าเนื้อ", carbs: 36, unit: "1 ชิ้น", carbUnits: 2, category: "หมวดอาหารจานเดียว" },
+            { name: "กระเพาะปลา", carbs: 9, unit: "1 ชาม", carbUnits: 0.5, category: "หมวดอาหารจานเดียว" },
+            { name: "หอยทอดใส่ไข่", carbs: 54, unit: "1 จาน", carbUnits: 3, category: "หมวดอาหารจานเดียว" },
+            { name: "ข้าวซอยไก่", carbs: 48.6, unit: "1 ชาม", carbUnits: 2.7, category: "หมวดอาหารจานเดียว" },
+            
+            // หมวดเครื่องดื่ม
+            { name: "คาพูชิโน", carbs: 12, unit: "1 แก้ว", carbUnits: 1, category: "หมวดเครื่องดื่ม" },
+            { name: "โกโก้ร้อน", carbs: 28, unit: "1 แก้ว", carbUnits: 2, category: "หมวดเครื่องดื่ม" },
+            { name: "ลาเต้", carbs: 9, unit: "1 แก้ว", carbUnits: 0.5, category: "หมวดเครื่องดื่ม" },
+            { name: "ม็อคคา (เอสเพรสโซและช็อกโกแลตใส่นม)", carbs: 19, unit: "1 แก้ว", carbUnits: 1.3, category: "หมวดเครื่องดื่ม" },
+            { name: "ม็อคคาเย็น", carbs: 26, unit: "1 แก้ว", carbUnits: 1.7, category: "หมวดเครื่องดื่ม" },
+            { name: "กาแฟเย็น", carbs: 45, unit: "1 แก้ว", carbUnits: 3, category: "หมวดเครื่องดื่ม" },
+            { name: "ชานมเย็น", carbs: 35, unit: "1 แก้ว", carbUnits: 2.3, category: "หมวดเครื่องดื่ม" },
+            { name: "ชาดำเย็น", carbs: 23, unit: "1 แก้ว", carbUnits: 1.5, category: "หมวดเครื่องดื่ม" },
+            { name: "โกโก้เย็น", carbs: 56, unit: "1 แก้ว", carbUnits: 3.7, category: "หมวดเครื่องดื่ม" },
+            { name: "น้ำเก็กฮวย", carbs: 22, unit: "1 แก้ว", carbUnits: 1.5, category: "หมวดเครื่องดื่ม" },
+            { name: "น้ำกระเจี๊ยบ", carbs: 30, unit: "1 แก้ว", carbUnits: 2, category: "หมวดเครื่องดื่ม" },
+            { name: "น้ำตาลสด", carbs: 38, unit: "1 แก้ว", carbUnits: 2.5, category: "หมวดเครื่องดื่ม" },
+            { name: "น้ำมะพร้าว 100%", carbs: 15, unit: "1 ขวด", carbUnits: 1, category: "หมวดเครื่องดื่ม" },
+            { name: "น้ำแอปเปิ้ล / น้ำส้ม / น้ำสับปะรด (สด)", carbs: 15, unit: "1/2 แก้ว", carbUnits: 1, category: "หมวดเครื่องดื่ม" },
+            { name: "น้ำองุ่น / น้ำลูกพรุน", carbs: 15, unit: "1/3 แก้ว", carbUnits: 1, category: "หมวดเครื่องดื่ม" },
+            { name: "น้ำอัดลม (โคล่า)", carbs: 26, unit: "1 กระป๋อง", carbUnits: 1.7, category: "หมวดเครื่องดื่ม" },
+            { name: "น้ำอัดลม (แดง - เขียว)", carbs: 45, unit: "1 กระป๋อง", carbUnits: 3, category: "หมวดเครื่องดื่ม" },
+            { name: "ชาเขียวรสน้ำผึ้งมะนาว", carbs: 58, unit: "1 ขวด", carbUnits: 4, category: "หมวดเครื่องดื่ม" },
+            { name: "น้ำแดง (มะนาว) โซดา", carbs: 30, unit: "1 แก้ว", carbUnits: 2, category: "หมวดเครื่องดื่ม" },
+            { name: "นมเปรี้ยวยาคูลท์", carbs: 14, unit: "1 ขวด", carbUnits: 1, category: "หมวดเครื่องดื่ม" },
+            { name: "โยเกิร์ตพร้อมดื่มยูเอชที รสผลไม้", carbs: 19, unit: "1 กล่อง", carbUnits: 1, category: "หมวดเครื่องดื่ม" },
+            { name: "นมปรุงแต่งรสช็อกโกแลต", carbs: 25, unit: "1 กล่อง", carbUnits: 1.7, category: "หมวดเครื่องดื่ม" },
+            { name: "นมปรุงแต่งรสสตรอเบอรี", carbs: 26, unit: "1 กล่อง", carbUnits: 1.7, category: "หมวดเครื่องดื่ม" },
+            { name: "โอวัลติน สูตรเพิ่มมอลต์และช็อกโกแลต", carbs: 28, unit: "1 กล่อง", carbUnits: 2, category: "หมวดเครื่องดื่ม" },
+            { name: "เครื่องดื่มรังนก สูตรน้ำตาลกรวด", carbs: 8, unit: "1 ขวด", carbUnits: 0.5, category: "หมวดเครื่องดื่ม" },
+            { name: "เครื่องดื่มซุปไก่สกัด สูตรดั้งเดิม", carbs: 0, unit: "1 ขวด", carbUnits: 0, category: "หมวดเครื่องดื่ม" },
+            { name: "เครื่องดื่มชูกำลัง", carbs: 28, unit: "1 ขวด", carbUnits: 2, category: "หมวดเครื่องดื่ม" },
+            { name: "เครื่องดื่มนักกีฬา", carbs: 31, unit: "1 ขวด", carbUnits: 2, category: "หมวดเครื่องดื่ม" },
+            { name: "เกเตอเรด (Gatorade)", carbs: 15, unit: "1 ขวด", carbUnits: 1, category: "หมวดเครื่องดื่ม" },
+            
+            // หมวดเครื่องปรุงรส
+            { name: "ซอสเทอริยากิ", carbs: 6, unit: "2 ช้อนโต๊ะ", carbUnits: 0.5, category: "หมวดเครื่องปรุงรส" },
+            { name: "ซอสบาร์บีคิว", carbs: 5, unit: "1 ช้อนโต๊ะ", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "ซอสพริก", carbs: 4, unit: "1 ช้อนโต๊ะ", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "ซอสมะเขือเทศ / แคทชับ", carbs: 4, unit: "1 ช้อนโต๊ะ", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "ซูโครสไซรัป / เมเปิ้ลไซรัป", carbs: 13, unit: "1 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดเครื่องปรุงรส" },
+            { name: "แซนด์วิชสเปรด", carbs: 6, unit: "2 ช้อนโต๊ะ", carbUnits: 0.5, category: "หมวดเครื่องปรุงรส" },
+            { name: "น้ำจิ้มไก่", carbs: 9, unit: "1 ช้อนโต๊ะ", carbUnits: 0.5, category: "หมวดเครื่องปรุงรส" },
+            { name: "น้ำจิ้มสุกี้", carbs: 5, unit: "1 ช้อนโต๊ะ", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "น้ำจิ้มหมูสะเต๊ะ", carbs: 4, unit: "1 ช้อนโต๊ะ", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "น้ำเชื่อมเข้มข้น", carbs: 11, unit: "1 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดเครื่องปรุงรส" },
+            { name: "น้ำเชื่อมใส่กะทิ", carbs: 7, unit: "1 ช้อนโต๊ะ", carbUnits: 0.5, category: "หมวดเครื่องปรุงรส" },
+            { name: "น้ำตาลทรายขาว", carbs: 4, unit: "1 ช้อนชา", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "น้ำตาลทรายแดง", carbs: 5, unit: "1 ช้อนชา", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "น้ำตาลผง (ไอซิ่ง)", carbs: 7, unit: "1 ช้อนโต๊ะ", carbUnits: 0.5, category: "หมวดเครื่องปรุงรส" },
+            { name: "น้ำตาลมะพร้าว (น้ำตาลปึก)", carbs: 4, unit: "1 ช้อนชา", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "น้ำผึ้ง", carbs: 14, unit: "1 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดเครื่องปรุงรส" },
+            { name: "นูเทลล่า", carbs: 11, unit: "1 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดเครื่องปรุงรส" },
+            { name: "เนยถั่วลิสง (ละเอียด)", carbs: 4, unit: "1 ช้อนโต๊ะ", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "เนยถั่วลิสง (หยาบ)", carbs: 4, unit: "1 ช้อนโต๊ะ", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "ผงโกโก้", carbs: 5, unit: "1 ช้อนโต๊ะ", carbUnits: 0.3, category: "หมวดเครื่องปรุงรส" },
+            { name: "แยมผิวส้ม", carbs: 13, unit: "1 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดเครื่องปรุงรส" },
+            { name: "แยมสตรอเบอรี", carbs: 14, unit: "1 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดเครื่องปรุงรส" },
+            { name: "แยมสับปะรด", carbs: 11, unit: "1 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดเครื่องปรุงรส" },
+            { name: "แยมเสาวรส", carbs: 14, unit: "1 ช้อนโต๊ะ", carbUnits: 1, category: "หมวดเครื่องปรุงรส" },
+            { name: "อาจาด", carbs: 6, unit: "2 ช้อนโต๊ะ", carbUnits: 0.5, category: "หมวดเครื่องปรุงรส" },
+            
+            // หมวดอาหารที่ไม่มีคาร์บ
+            { name: "ผักใบ", carbs: 0, unit: "1 ทัพพี", carbUnits: 0, category: "หมวดอาหารที่ไม่มีคาร์บ" },
+            { name: "เนื้อสัตว์", carbs: 0, unit: "2 ช้อนโต๊ะ", carbUnits: 0, category: "หมวดอาหารที่ไม่มีคาร์บ" },
+            { name: "น้ำมันหรือไขมัน", carbs: 0, unit: "1 ช้อนชา", carbUnits: 0, category: "หมวดอาหารที่ไม่มีคาร์บ" },
+            { name: "ถั่วลิสง", carbs: 2.1, unit: "10 เมล็ด", carbUnits: 0, category: "หมวดอาหารที่ไม่มีคาร์บ" },
+            { name: "เมล็ดมะม่วงหิมพานต์", carbs: 3.6, unit: "6 เมล็ด", carbUnits: 0, category: "หมวดอาหารที่ไม่มีคาร์บ" },
+            { name: "อัลมอนด์", carbs: 1, unit: "6 เมล็ด", carbUnits: 0, category: "หมวดอาหารที่ไม่มีคาร์บ" },
+            { name: "แมคคาเดเมีย", carbs: 0.9, unit: "6 เมล็ด", carbUnits: 0, category: "หมวดอาหารที่ไม่มีคาร์บ" },
+            { name: "พิตาชิโอ", carbs: 3.1, unit: "13 เมล็ด", carbUnits: 0, category: "หมวดอาหารที่ไม่มีคาร์บ" },
             { name: "น้ำใบเตย", carbs: 5, unit: "1 แก้ว", carbUnits: 0.3, category: "เครื่องดื่ม" }
         ];
 
@@ -2147,11 +2389,15 @@
 
         function getCarbCategoryIcon(category) {
             const icons = {
-                'ข้าวและแป้ง': '🍚',
-                'ผลไม้': '🍎',
-                'นมและผลิตภัณฑ์': '🥛',
-                'ขนมและของหวาน': '🍰',
-                'เครื่องดื่ม': '🥤'
+                'หมวดข้าวแป้งและผลิตภัณฑ์': '🍚',
+                'หมวดผลไม้': '🍎',
+                'หมวดผักที่มีแป้ง': '🥬',
+                'หมวดนมและผลิตภัณฑ์จากนม': '🥛',
+                'หมวดขนมหวานและเบเกอรี': '🍰',
+                'หมวดอาหารจานเดียว': '🍽️',
+                'หมวดเครื่องดื่ม': '🥤',
+                'หมวดเครื่องปรุงรส': '🧂',
+                'หมวดอาหารที่ไม่มีคาร์บ': '🥬'
             };
             return icons[category] || '🍽️';
         }
@@ -2171,7 +2417,7 @@
             );
             
             if (results.length === 0) {
-                resultDiv.innerHTML = `
+            resultDiv.innerHTML = `
                     <p style="color: red;">ไม่พบอาหารที่ค้นหา: "${searchTerm}"</p>
                     <p>ลองค้นหาด้วยคำอื่น เช่น "ข้าว", "ก๋วยเตี๋ยว", "ลาบ"</p>
                 `;
@@ -2263,10 +2509,10 @@
                         } else if (this.id === 'food-search') {
                             searchFood();
                         } else {
-                            // หาปุ่มที่อยู่ในกลุ่มเดียวกันและคลิก
-                            const button = this.parentElement.querySelector('button');
-                            if (button) {
-                                button.click();
+                        // หาปุ่มที่อยู่ในกลุ่มเดียวกันและคลิก
+                        const button = this.parentElement.querySelector('button');
+                        if (button) {
+                            button.click();
                             }
                         }
                     }
