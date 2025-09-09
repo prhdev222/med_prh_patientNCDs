@@ -664,6 +664,147 @@
             text-align: center;
         }
 
+        /* Video Grid Styles */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .video-item {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .video-item h4 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Link Grid Styles */
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .link-item {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #3498db;
+        }
+
+        .link-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .link-item h4 {
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .link-item p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .external-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .external-link:hover {
+            background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        /* App Grid Styles */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .app-item {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            border-top: 4px solid #e74c3c;
+        }
+
+        .app-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .app-item h4 {
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .app-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .app-item .external-link {
+            margin-top: 0.5rem;
+        }
+
         .footer {
             background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
             color: white;
@@ -910,6 +1051,40 @@
             .conclusion-box p {
                 font-size: 1rem;
             }
+
+            /* Mobile Video Grid */
+            .video-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .video-item {
+                padding: 1rem;
+            }
+
+            .video-container {
+                height: 180px;
+            }
+
+            /* Mobile Link Grid */
+            .link-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .link-item {
+                padding: 1rem;
+            }
+
+            /* Mobile App Grid */
+            .app-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .app-item {
+                padding: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1053,6 +1228,7 @@
             <button class="nav-tab" onclick="showSection('prevention')">การป้องกัน</button>
             <button class="nav-tab" onclick="showSection('dhamma')">หลักธรรม</button>
             <button class="nav-tab" onclick="showSection('calculator')">เครื่องคำนวณ</button>
+            <button class="nav-tab" onclick="showSection('knowledge')">ความรู้เพิ่มเติม</button>
         </nav>
 
         <!-- หน้าแรก -->
@@ -2467,6 +2643,137 @@
                         </a>
                     </div>
                     <p><em>อ้างอิง: <a href="https://www.rama.mahidol.ac.th/cardio_vascular_risk/thai_cv_risk_score/" target="_blank">โรงพยาบาลรามาธิบดี</a></em></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ความรู้เพิ่มเติม -->
+        <section id="knowledge" class="content-section">
+            <h2>📚 ความรู้เพิ่มเติม</h2>
+            
+            <div class="info-box">
+                <h3>🎬 อนิเมชั่นเกี่ยวกับการป้องกันโรค NCDs</h3>
+                <p>กรมการแพทย์ได้จัดทำอนิเมชั่นเพื่อให้ความรู้เกี่ยวกับการป้องกันโรคไม่ติดต่อ (NCDs) ในรูปแบบที่เข้าใจง่ายและน่าสนใจ</p>
+                
+                <div class="video-grid">
+                    <div class="video-item">
+                        <h4>อนิเมชั่นที่ 1</h4>
+                        <div class="video-container">
+                            <iframe 
+                                width="100%" 
+                                height="200" 
+                                src="https://www.youtube.com/embed/MIipAETEytA" 
+                                title="อนิเมชั่นการป้องกันโรค NCDs 1" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p class="video-description">ความรู้พื้นฐานเกี่ยวกับโรค NCDs และการป้องกัน</p>
+                    </div>
+                    
+                    <div class="video-item">
+                        <h4>อนิเมชั่นที่ 2</h4>
+                        <div class="video-container">
+                            <iframe 
+                                width="100%" 
+                                height="200" 
+                                src="https://www.youtube.com/embed/nZB7I6Lwo8k" 
+                                title="อนิเมชั่นการป้องกันโรค NCDs 2" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p class="video-description">เทคนิคการดูแลสุขภาพเพื่อป้องกันโรค NCDs</p>
+                    </div>
+                    
+                    <div class="video-item">
+                        <h4>อนิเมชั่นที่ 3</h4>
+                        <div class="video-container">
+                            <iframe 
+                                width="100%" 
+                                height="200" 
+                                src="https://www.youtube.com/embed/ezHrShg22xw" 
+                                title="อนิเมชั่นการป้องกันโรค NCDs 3" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p class="video-description">การปรับเปลี่ยนพฤติกรรมเพื่อสุขภาพที่ดี</p>
+                    </div>
+                    
+                    <div class="video-item">
+                        <h4>อนิเมชั่นที่ 4</h4>
+                        <div class="video-container">
+                            <iframe 
+                                width="100%" 
+                                height="200" 
+                                src="https://www.youtube.com/embed/DGCl53Zhu2o" 
+                                title="อนิเมชั่นการป้องกันโรค NCDs 4" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p class="video-description">การตรวจสุขภาพและการเฝ้าระวังโรค NCDs</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h3>🔗 ลิงก์ความรู้และข่าวสารเพิ่มเติม</h3>
+                <div class="link-grid">
+                    <div class="link-item">
+                        <h4>📚 คู่มือสุขภาพ โรงพยาบาลสงฆ์</h4>
+                        <p>คู่มือความรู้ด้านสุขภาพและการดูแลตนเองจากโรงพยาบาลสงฆ์</p>
+                        <a href="https://priest-hospital.go.th/Handbook/Index" target="_blank" class="external-link">เยี่ยมชมเว็บไซต์</a>
+                    </div>
+                    
+                    <div class="link-item">
+                        <h4>📱 Facebook โรงพยาบาลสงฆ์</h4>
+                        <p>ติดตามข่าวสารและข้อมูลสุขภาพล่าสุดจากโรงพยาบาลสงฆ์</p>
+                        <a href="https://www.facebook.com/priesthospital/?locale=th_TH" target="_blank" class="external-link">เยี่ยมชมเพจ</a>
+                    </div>
+                    
+                    <div class="link-item">
+                        <h4>📖 กรมการแพทย์</h4>
+                        <p>ข้อมูลความรู้เกี่ยวกับโรค NCDs จากกรมการแพทย์</p>
+                        <a href="https://www.dms.go.th/" target="_blank" class="external-link">เยี่ยมชมเว็บไซต์</a>
+                    </div>
+                    
+                    <div class="link-item">
+                        <h4>📊 สถิติสุขภาพ</h4>
+                        <p>ข้อมูลสถิติและตัวเลขสำคัญเกี่ยวกับโรค NCDs</p>
+                        <a href="https://www.hdc.moph.go.th/" target="_blank" class="external-link">เยี่ยมชมเว็บไซต์</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h3>📱 แอปพลิเคชันแนะนำ</h3>
+                <div class="app-grid">
+                    <div class="app-item">
+                        <h4>🏥 PRH Connect</h4>
+                        <p>แอปพลิเคชันของโรงพยาบาลสงฆ์ สำหรับดูข้อมูลการนัดหมาย คิวการรับบริการ ผลการตรวจ และประวัติการรักษา</p>
+                        <a href="https://play.google.com/store/apps/details?id=th.go.priest.hospital.connect&hl=th" target="_blank" class="external-link">ดาวน์โหลดแอป</a>
+                    </div>
+                    
+                    <div class="app-item">
+                        <h4>📱 Health Connect</h4>
+                        <p>แอปสำหรับติดตามสุขภาพและบันทึกข้อมูลการตรวจสุขภาพ</p>
+                    </div>
+                    
+                    <div class="app-item">
+                        <h4>🏃‍♂️ Fitness Tracker</h4>
+                        <p>แอปสำหรับติดตามการออกกำลังกายและกิจกรรมทางกาย</p>
+                    </div>
+                    
+                    <div class="app-item">
+                        <h4>🍎 Nutrition Guide</h4>
+                        <p>แอปสำหรับคำนวณแคลอรี่และแนะนำอาหารเพื่อสุขภาพ</p>
+                    </div>
                 </div>
             </div>
         </section>
