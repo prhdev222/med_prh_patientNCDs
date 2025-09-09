@@ -552,6 +552,37 @@
             padding: 0.2rem 0.6rem;
         }
 
+        .conclusion-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .conclusion-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .conclusion-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .conclusion-box p {
+            color: white;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+            font-weight: 500;
+        }
+
         .calculator {
             background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
             padding: 2rem;
@@ -866,6 +897,19 @@
                 align-self: flex-end;
                 font-size: 0.8rem;
             }
+
+            .conclusion-box {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+
+            .conclusion-box h3 {
+                font-size: 1.2rem;
+            }
+
+            .conclusion-box p {
+                font-size: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1067,6 +1111,11 @@
                 <div style="background: #ff6b6b; color: white; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center;">
                     <h4>⚠️ หากมีอาการเหล่านี้ ให้โทร 1669 หรือไปโรงพยาบาลทันที!</h4>
                 </div>
+            </div>
+
+            <div class="conclusion-box">
+                <h3>🌟 สรุปการป้องกัน NCDs</h3>
+                <p>เพื่อให้มีชีวิตอยู่ยืนยาว (Lifespan) โดยมีสุขภาพกายและใจที่ดีจนวันสุดท้ายของชีวิต (Healthspan)</p>
             </div>
         </section>
 
