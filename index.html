@@ -484,6 +484,74 @@
             font-size: 0.9rem;
         }
 
+        .prevention-explanation {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .explanation-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .explanation-card h4 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .explanation-card p {
+            color: #495057;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .risk-category {
+            margin-bottom: 1.5rem;
+        }
+
+        .risk-category h5 {
+            color: #2c3e50;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 2px solid #ff6b35;
+        }
+
+        .sub-risk-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid #ff6b35;
+            transition: background-color 0.2s ease;
+        }
+
+        .sub-risk-item:hover {
+            background: #e9ecef;
+        }
+
+        .sub-risk-item .risk-condition {
+            font-size: 0.9rem;
+            color: #495057;
+            flex: 1;
+        }
+
+        .sub-risk-item .target-value {
+            font-size: 0.85rem;
+            padding: 0.2rem 0.6rem;
+        }
+
         .calculator {
             background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
             padding: 2rem;
@@ -767,6 +835,34 @@
             }
 
             .target-value {
+                align-self: flex-end;
+                font-size: 0.8rem;
+            }
+
+            .prevention-explanation {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .explanation-card {
+                padding: 1rem;
+            }
+
+            .explanation-card h4 {
+                font-size: 1rem;
+            }
+
+            .explanation-card p {
+                font-size: 0.9rem;
+            }
+
+            .sub-risk-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+            }
+
+            .sub-risk-item .target-value {
                 align-self: flex-end;
                 font-size: 0.8rem;
             }
@@ -1502,6 +1598,17 @@
                 <p><strong>LDL ≥ 190 mg/dl ให้ลดระดับลงดังนี้:</strong></p>
             </div>
 
+            <div class="prevention-explanation">
+                <div class="explanation-card">
+                    <h4>🛡️ Primary Prevention (การป้องกันระดับที่ 1)</h4>
+                    <p>การป้องกันในคนที่ยังไม่เป็นโรคหัวใจและหลอดเลือด เพื่อป้องกันไม่ให้เกิดโรคขึ้นมาใหม่</p>
+                </div>
+                <div class="explanation-card">
+                    <h4>❤️ Secondary Prevention (การป้องกันระดับที่ 2)</h4>
+                    <p>การป้องกันในคนที่เป็นโรคหัวใจและหลอดเลือดแล้ว เพื่อป้องกันไม่ให้โรคแย่ลงหรือเกิดซ้ำ</p>
+                </div>
+            </div>
+
             <div class="diagnosis-section">
                 <div class="diagnosis-card primary">
                     <h4>🛡️ การป้องกันระดับที่ 1 (Primary Prevention)</h4>
@@ -1540,43 +1647,32 @@
                 <div class="diagnosis-card secondary">
                     <h4>❤️ การป้องกันระดับที่ 2 (Secondary Prevention)</h4>
                     <div class="risk-levels">
-                        <div class="risk-item">
-                            <span class="risk-condition">โรคหลอดเลือดหัวใจ:</span>
-                            <span class="target-value">-</span>
+                        <div class="risk-category">
+                            <h5>โรคหลอดเลือดหัวใจ:</h5>
+                            <div class="sub-risk-item">
+                                <span class="risk-condition">หัวใจขาดเลือดเฉียบพลัน:</span>
+                                <span class="target-value">&lt; 55 mg/dl</span>
+                            </div>
+                            <div class="sub-risk-item">
+                                <span class="risk-condition">หัวใจขาดเลือดเรื้อรัง:</span>
+                                <span class="target-value">&lt; 70 mg/dl</span>
+                            </div>
                         </div>
-                        <div class="risk-item">
-                            <span class="risk-condition">หัวใจขาดเลือดเฉียบพลัน:</span>
-                            <span class="target-value">&lt; 55 mg/dl</span>
-                        </div>
-                        <div class="risk-item">
-                            <span class="risk-condition">หัวใจขาดเลือดเรื้อรัง:</span>
-                            <span class="target-value">&lt; 70 mg/dl</span>
-                        </div>
-                        <div class="risk-item">
-                            <span class="risk-condition">โรคหลอดเลือดสมอง:</span>
-                            <span class="target-value">-</span>
-                        </div>
-                        <div class="risk-item">
-                            <span class="risk-condition">หลอดเลือดใหญ่แข็งตัว:</span>
-                            <span class="target-value">&lt; 70 mg/dl</span>
-                        </div>
-                        <div class="risk-item">
-                            <span class="risk-condition">หลอดเลือดเล็กแข็งตัว:</span>
-                            <span class="target-value">&lt; 100 mg/dl</span>
+                        <div class="risk-category">
+                            <h5>โรคหลอดเลือดสมอง:</h5>
+                            <div class="sub-risk-item">
+                                <span class="risk-condition">หลอดเลือดใหญ่แข็งตัว:</span>
+                                <span class="target-value">&lt; 70 mg/dl</span>
+                            </div>
+                            <div class="sub-risk-item">
+                                <span class="risk-condition">หลอดเลือดเล็กแข็งตัว:</span>
+                                <span class="target-value">&lt; 100 mg/dl</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="info-box">
-                <h4>💡 สรุปสำหรับผู้ป่วย</h4>
-                <ul>
-                    <li><strong>คนปกติ:</strong> LDL ควรต่ำกว่า 100 mg/dl</li>
-                    <li><strong>คนเป็นโรคหัวใจ:</strong> LDL ควรต่ำกว่า 70 mg/dl หรือ 55 mg/dl</li>
-                    <li><strong>คนเป็นเบาหวาน/ไต:</strong> LDL ควรต่ำกว่า 100 mg/dl</li>
-                    <li><strong>ยิ่งต่ำยิ่งดี:</strong> ตัวเลขต่ำ = ความเสี่ยงโรคหัวใจและหลอดเลือดต่ำ</li>
-                </ul>
-            </div>
 
             <div class="warning-box">
                 <h4>⚠️ ข้อควรทราบ</h4>
