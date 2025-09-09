@@ -240,6 +240,156 @@
             margin-top: 0.8rem !important;
         }
 
+        .formula-section {
+            margin: 2rem 0;
+        }
+
+        .formula-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #dee2e6;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .formula-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .formula-card h4 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            text-align: center;
+            border-bottom: 3px solid #ff6b35;
+            padding-bottom: 0.5rem;
+        }
+
+        .formula-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .formula-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .plate-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .plate {
+            width: 200px;
+            height: 200px;
+            background: #fff;
+            border: 3px solid #ddd;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .food-item {
+            padding: 0.5rem 1rem;
+            margin: 0.3rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .food-item.vegetables {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+        }
+
+        .food-item.starch {
+            background: linear-gradient(135deg, #FF9800, #FFC107);
+            color: white;
+        }
+
+        .food-item.protein {
+            background: linear-gradient(135deg, #E91E63, #F06292);
+            color: white;
+        }
+
+        .spoons-container {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .spoon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .spoon {
+            font-size: 2rem;
+        }
+
+        .ingredient {
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .ingredient.sugar {
+            background: linear-gradient(135deg, #FFE0B2, #FFCC02);
+            color: #E65100;
+        }
+
+        .ingredient.oil {
+            background: linear-gradient(135deg, #FFF3E0, #FFB74D);
+            color: #E65100;
+        }
+
+        .ingredient.salt {
+            background: linear-gradient(135deg, #F3E5F5, #BA68C8);
+            color: #4A148C;
+        }
+
+        .formula-details {
+            flex: 1;
+        }
+
+        .formula-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .formula-details li {
+            background: white;
+            margin: 0.8rem 0;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b35;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .formula-details li:hover {
+            transform: translateX(5px);
+        }
+
         .calculator {
             background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
             padding: 2rem;
@@ -459,6 +609,40 @@
 
             .answer-box p {
                 font-size: 0.9rem;
+            }
+
+            .formula-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .plate-container {
+                width: 150px;
+                height: 150px;
+            }
+
+            .plate {
+                width: 150px;
+                height: 150px;
+            }
+
+            .food-item {
+                font-size: 0.8rem;
+                min-width: 100px;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .spoons-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .formula-card {
+                padding: 1.5rem;
+            }
+
+            .formula-card h4 {
+                font-size: 1.2rem;
             }
         }
 
@@ -1384,6 +1568,60 @@
                 <div class="tip-card">
                     <h4>😴 เอนหลัง</h4>
                     <p>นอนหลับพักผ่อนให้เพียงพอ 7-9 ชั่วโมงต่อคืน หลีกเลี่ยงการนอนดึกและใช้มือถือก่อนนอน</p>
+                </div>
+            </div>
+
+            <h3>สูตรอาหารเพื่อสุขภาพ</h3>
+            <div class="formula-section">
+                <div class="formula-card">
+                    <h4>🍽️ 2:1:1 สูตรเด็ดพิชิตพุง</h4>
+                    <div class="formula-content">
+                        <div class="formula-visual">
+                            <div class="plate-container">
+                                <div class="plate">
+                                    <div class="food-item vegetables">ผัก 2 ส่วน</div>
+                                    <div class="food-item starch">แป้ง 1 ส่วน</div>
+                                    <div class="food-item protein">เนื้อสัตว์ 1 ส่วน</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="formula-details">
+                            <ul>
+                                <li><strong>ผัก 2 ส่วน</strong> ในแต่ละมื้อ</li>
+                                <li><strong>แป้ง 1 ส่วน</strong> ในแต่ละมื้อ</li>
+                                <li><strong>เนื้อสัตว์ 1 ส่วน</strong> ในแต่ละมื้อ</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="formula-card">
+                    <h4>⚖️ 6:6:1 สูตรรสกลมกล่อมห่างไกลโรค</h4>
+                    <div class="formula-content">
+                        <div class="formula-visual">
+                            <div class="spoons-container">
+                                <div class="spoon-item">
+                                    <div class="spoon">🥄</div>
+                                    <div class="ingredient sugar">น้ำตาล</div>
+                                </div>
+                                <div class="spoon-item">
+                                    <div class="spoon">🥄</div>
+                                    <div class="ingredient oil">ไขมัน</div>
+                                </div>
+                                <div class="spoon-item">
+                                    <div class="spoon">🥄</div>
+                                    <div class="ingredient salt">เกลือ</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="formula-details">
+                            <ul>
+                                <li><strong>น้ำตาล 6 ช้อนชา (24 กรัม)</strong> ต่อวัน</li>
+                                <li><strong>ไขมัน 6 ช้อนชา (24 กรัม)</strong> ต่อวัน</li>
+                                <li><strong>เกลือ 1 ช้อนชา</strong> ต่อวัน</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
