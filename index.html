@@ -191,6 +191,55 @@
             line-height: 1.8;
         }
 
+        .comparison-section {
+            margin: 2rem 0;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .comparison-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .comparison-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .comparison-item h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .answer-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b35;
+        }
+
+        .answer-box p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .comparison-text {
+            color: #ff6b35 !important;
+            font-weight: bold;
+            margin-top: 0.8rem !important;
+        }
+
         .calculator {
             background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
             padding: 2rem;
@@ -390,6 +439,27 @@
             .dhamma-quote p {
                 font-size: 1rem;
             }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .comparison-item {
+                padding: 1rem;
+            }
+
+            .comparison-item h4 {
+                font-size: 1rem;
+            }
+
+            .answer-box {
+                padding: 0.8rem;
+            }
+
+            .answer-box p {
+                font-size: 0.9rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -537,8 +607,52 @@
 
         <!-- หน้าแรก -->
         <section id="home" class="content-section active">
-            <h2>โรคไม่ติดต่อ (NCDs) คืออะไร?</h2>
+            <h2>รู้จัก NCDs ภัยเงียบประจำวัดเขตเมือง</h2>
+            
+            <div class="dhamma-quote">
+                <p>"พระพุทธเจ้าทรงตรัสรู้อะไร"</p>
+            </div>
+
+            <div class="comparison-section">
+                <h3>🔄 เปรียบเทียบ: ชีวิต และ NCDs</h3>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <h4>❓ ชีวิตคืออะไร?</h4>
+                        <div class="answer-box">
+                            <p><strong>ขันธ์ 5 : รูป เวทนา สัญญา สังขาร วิญญาณ</strong></p>
+                            <p class="comparison-text">→ <strong>โรคไม่ติดต่อ เกิดจากตนเอง</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-item">
+                        <h4>❓ ชีวิตเป็นอย่างไร?</h4>
+                        <div class="answer-box">
+                            <p><strong>ไตรลักษณ์ : อนิจจัง ทุกขัง อนัตตา</strong></p>
+                            <p class="comparison-text">→ <strong>ความเสื่อมของร่างกาย</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-item">
+                        <h4>❓ ชีวิตเป็นไปอย่างไร?</h4>
+                        <div class="answer-box">
+                            <p><strong>อิทัปปัจจยตา ปฏิจจสมุปบาท</strong></p>
+                            <p class="comparison-text">→ <strong>พฤติกรรมเสี่ยงทำให้เกิดโรค</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="comparison-item">
+                        <h4>❓ ชีวิตควรเป็นอยู่อย่างไรให้ห่างไกลจากโรค NCDs?</h4>
+                        <div class="answer-box">
+                            <p><strong>สัมมาปฏิปทา อริยสัจ4 → อริยมรรค8</strong></p>
+                            <p class="comparison-text">→ <strong>การปฏิบัติตัวที่ถูกต้องให้ห่างไกลโรค</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="info-box">
+                <h3>📋 โรคไม่ติดต่อ (NCDs) คืออะไร?</h3>
                 <p>โรคไม่ติดต่อ (Non-Communicable Diseases) เป็นกลุ่มของโรคที่ไม่ได้เกิดจากการติดเชื้อ แต่มีผลกระทบต่อสุขภาพระยะยาว และมักเกิดจากปัจจัยเสี่ยงทางพฤติกรรม</p>
             </div>
 
