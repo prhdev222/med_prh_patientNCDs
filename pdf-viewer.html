@@ -83,6 +83,10 @@
         btnZoomIn.addEventListener('click', async function(){ if(scale<maxScale){ scale = Math.min(maxScale, scale+scaleStep); await renderPage(currentPage); } });
         btnZoomOut.addEventListener('click', async function(){ if(scale>minScale){ scale = Math.max(minScale, scale-scaleStep); await renderPage(currentPage); } });
 
+        // Debug
+        console.log('Original fileUrl:', fileUrl);
+
+        // Load PDF
         loadPdf(fileUrl);
     </script>
 </head>
