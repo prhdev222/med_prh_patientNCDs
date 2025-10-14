@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="th">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ตัวอ่านเอกสาร PDF</title>
+    <meta name="color-scheme" content="light dark">
+    <style>
+        :root { --bg:#f6f7fb; --fg:#1f2937; --bar:#0ea5e9; --btn:#0ea5e9; --btnfg:#fff; }
+        html,body{ height:100%; margin:0; background:var(--bg); color:var(--fg); font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif; }
+        .toolbar { position:sticky; top:0; z-index:10; display:flex; gap:.5rem; align-items:center; padding:.6rem .8rem; background:linear-gradient(180deg,#ffffff,#f4fbff); border-bottom:1px solid #e5e7eb; box-shadow:0 1px 6px rgba(0,0,0,.04); }
+        .toolbar .title{ font-weight:700; margin-right:auto; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:40vw; }
+        button{ appearance:none; border:0; background:var(--btn); color:var(--btnfg); padding:.5rem .7rem; border-radius:.5rem; cursor:pointer; font-weight:600; }
+        button[disabled]{ opacity:.5; cursor:not-allowed; }
+        .page-info{ margin-left:.25rem; font-weight:600; }
+        .viewer{ display:flex; justify-content:center; }
+        #pdfCanvas{ width:min(95vw,900px); height:auto; background:#fff; box-shadow:0 10px 25px rgba(0,0,0,.08); margin:1rem auto; border-radius:.5rem; }
+        .footer{ text-align:center; font-size:.85rem; color:#6b7280; padding:0 .75rem 1rem; }
+        @media (max-width:480px){ .toolbar .title{ display:none; } }
+    </style>
+    <script type="module">
+        // ใช้ PDF.js จาก CDN (โมดูล ESM)
+        import { getDocument, GlobalWorkerOptions } from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.mjs';
+        GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.worker.mjs';
+
+        const params = new URLSearchParams(location.search);
+        const fileParam = params.get('file');
+        const fileUrl = fileParam ? new URL(fileParam, location.href).href : '';
+
+        const canvas = document.getElementById('pdfCanvas');
+        const ctx = canvas.getContext('2d');
+        const pageText = document.getElementById('pageText');
+        const titleEl = document.getElementById('title');
+        const btnPrev = document.getElementById('btnPrev');
+        const btnNext = document.getElementById('btnNext');
+        const btnZoomIn = document.getElementById('btnZoomIn');
+        const btnZoomOut = document.getElementById('btnZoomOut');
+
+        let pdfDoc = null; let currentPage = 1; let scale = 1.2; const minScale = .6, maxScale = 2.4, scaleStep = .2;
+
+        function updateButtons(){
+            btnPrev.disabled = currentPage <= 1;
+            btnNext.disabled = !pdfDoc || currentPage >= pdfDoc.numPages;
+            btnZoomOut.disabled = scale <= minScale; btnZoomIn.disabled = scale >= maxScale;
+            pageText.textContent = pdfDoc ? `${currentPage} / ${pdfDoc.numPages}` : '-';
+        }
+
+        async function renderPage(pageNum){
+            const page = await pdfDoc.getPage(pageNum);
+            const viewport = page.getViewport({ scale });
+            canvas.width = Math.floor(viewport.width);
+            canvas.height = Math.floor(viewport.height);
+            await page.render({ canvasContext: ctx, viewport }).promise;
+            updateButtons();
+        }
+
+        async function loadPdf(url){
+            if(!url){ alert('ไม่พบไฟล์ PDF'); return; }
+            try{
+                // Try to open PDF in new tab if direct viewer fails
+                const testResponse = await fetch(url, { method: 'HEAD' });
+                if (!testResponse.ok) {
+                    // If file doesn't exist, try to open via GitHub's raw URL
+                    const rawUrl = url.replace('https://prhdev222.github.io/', 'https://raw.githubusercontent.com/prhdev222/med_prh_patientNCDs/main/');
+                    window.open(rawUrl, '_blank');
+                    return;
+                }
+
+                pdfDoc = await getDocument(url).promise;
+                titleEl.textContent = decodeURIComponent(url.split('/').pop());
+                currentPage = 1; scale = 1.2; await renderPage(currentPage);
+            }catch(err){
+                console.error(err);
+                // Fallback: open directly in browser
+                window.open(url, '_blank');
+            }
+        }
+
+        // Controls
+        btnPrev.addEventListener('click', async ()=>{ if(currentPage>1){ currentPage--; await renderPage(currentPage); } });
+        btnNext.addEventListener('click', async ()=>{ if(currentPage<pdfDoc.numPages){ currentPage++; await renderPage(currentPage); } });
+        btnZoomIn.addEventListener('click', async ()=>{ if(scale<maxScale){ scale = Math.min(maxScale, scale+scaleStep); await renderPage(currentPage); } });
+        btnZoomOut.addEventListener('click', async ()=>{ if(scale>minScale){ scale = Math.max(minScale, scale-scaleStep); await renderPage(currentPage); } });
+
+        // Load
+        loadPdf(fileUrl);
+    </script>
+</head>
+<body>
+    <div class="toolbar">
+        <div class="title" id="title">กำลังโหลดเอกสาร…</div>
+        <button id="btnPrev" title="หน้าก่อนหน้า">◀</button>
+        <button id="btnNext" title="หน้าถัดไป">▶</button>
+        <span class="page-info" id="pageText">-</span>
+        <button id="btnZoomOut" title="ซูมออก">−</button>
+        <button id="btnZoomIn" title="ซูมเข้า">＋</button>
+    </div>
+
+    <div class="viewer">
+        <canvas id="pdfCanvas" aria-label="พื้นที่แสดงเอกสาร PDF"></canvas>
+    </div>
+    <div class="footer">รองรับการเปิดในเบราว์เซอร์ของ LINE OA, iOS และ Android</div>
+</body>
+</html>
+
+
