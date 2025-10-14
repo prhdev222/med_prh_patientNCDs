@@ -18,10 +18,12 @@
         .footer{ text-align:center; font-size:.85rem; color:#6b7280; padding:0 .75rem 1rem; }
         @media (max-width:480px){ .toolbar .title{ display:none; } }
     </style>
-    <script type="module">
-        // ใช้ PDF.js จาก CDN (โมดูล ESM)
-        import { getDocument, GlobalWorkerOptions } from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.mjs';
-        GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.worker.mjs';
+    <!-- ใช้ PDF.js (UMD) เพื่อความเข้ากันได้สูง รวมถึง LINE/iOS -->
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+    <script>
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+        }
 
         const params = new URLSearchParams(location.search);
         const fileParam = params.get('file');
@@ -42,47 +44,32 @@
             btnPrev.disabled = currentPage <= 1;
             btnNext.disabled = !pdfDoc || currentPage >= pdfDoc.numPages;
             btnZoomOut.disabled = scale <= minScale; btnZoomIn.disabled = scale >= maxScale;
-            pageText.textContent = pdfDoc ? `${currentPage} / ${pdfDoc.numPages}` : '-';
+            pageText.textContent = pdfDoc ? (currentPage + ' / ' + pdfDoc.numPages) : '-';
         }
 
         async function renderPage(pageNum){
             const page = await pdfDoc.getPage(pageNum);
-            const viewport = page.getViewport({ scale });
+            const viewport = page.getViewport({ scale: scale });
             canvas.width = Math.floor(viewport.width);
             canvas.height = Math.floor(viewport.height);
-            await page.render({ canvasContext: ctx, viewport }).promise;
+            await page.render({ canvasContext: ctx, viewport: viewport }).promise;
             updateButtons();
         }
 
         async function loadPdf(url){
             if(!url){ alert('ไม่พบไฟล์ PDF'); return; }
             try{
-                // Try to open PDF in new tab if direct viewer fails
-                const testResponse = await fetch(url, { method: 'HEAD' });
-                if (!testResponse.ok) {
-                    // If file doesn't exist, try to open via GitHub's raw URL
-                    const rawUrl = url.replace('https://prhdev222.github.io/', 'https://raw.githubusercontent.com/prhdev222/med_prh_patientNCDs/main/');
-                    window.open(rawUrl, '_blank');
-                    return;
-                }
-
-                pdfDoc = await getDocument(url).promise;
-                titleEl.textContent = decodeURIComponent(url.split('/').pop());
+                pdfDoc = await pdfjsLib.getDocument(url).promise;
+                try { titleEl.textContent = decodeURIComponent(url.split('/').pop()); } catch(e) {}
                 currentPage = 1; scale = 1.2; await renderPage(currentPage);
-            }catch(err){
-                console.error(err);
-                // Fallback: open directly in browser
-                window.open(url, '_blank');
-            }
+            }catch(err){ console.error(err); alert('ไม่สามารถเปิดไฟล์ PDF ได้'); }
         }
 
-        // Controls
-        btnPrev.addEventListener('click', async ()=>{ if(currentPage>1){ currentPage--; await renderPage(currentPage); } });
-        btnNext.addEventListener('click', async ()=>{ if(currentPage<pdfDoc.numPages){ currentPage++; await renderPage(currentPage); } });
-        btnZoomIn.addEventListener('click', async ()=>{ if(scale<maxScale){ scale = Math.min(maxScale, scale+scaleStep); await renderPage(currentPage); } });
-        btnZoomOut.addEventListener('click', async ()=>{ if(scale>minScale){ scale = Math.max(minScale, scale-scaleStep); await renderPage(currentPage); } });
+        btnPrev.addEventListener('click', async function(){ if(currentPage>1){ currentPage--; await renderPage(currentPage); } });
+        btnNext.addEventListener('click', async function(){ if(currentPage<pdfDoc.numPages){ currentPage++; await renderPage(currentPage); } });
+        btnZoomIn.addEventListener('click', async function(){ if(scale<maxScale){ scale = Math.min(maxScale, scale+scaleStep); await renderPage(currentPage); } });
+        btnZoomOut.addEventListener('click', async function(){ if(scale>minScale){ scale = Math.max(minScale, scale-scaleStep); await renderPage(currentPage); } });
 
-        // Load
         loadPdf(fileUrl);
     </script>
 </head>
