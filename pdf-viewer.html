@@ -59,10 +59,23 @@
         async function loadPdf(url){
             if(!url){ alert('ไม่พบไฟล์ PDF'); return; }
             try{
-                pdfDoc = await pdfjsLib.getDocument(url).promise;
+                // แปลง URL จาก GitHub Pages เป็น GitHub raw URL สำหรับไฟล์ LFS
+                let finalUrl = url;
+                if (url.includes('prhdev222.github.io')) {
+                    finalUrl = url.replace(
+                        'https://prhdev222.github.io/med_prh_patientNCDs/',
+                        'https://github.com/prhdev222/med_prh_patientNCDs/raw/main/'
+                    );
+                }
+
+                pdfDoc = await pdfjsLib.getDocument(finalUrl).promise;
                 try { titleEl.textContent = decodeURIComponent(url.split('/').pop()); } catch(e) {}
                 currentPage = 1; scale = 1.2; await renderPage(currentPage);
-            }catch(err){ console.error(err); alert('ไม่สามารถเปิดไฟล์ PDF ได้'); }
+            }catch(err){
+                console.error(err);
+                console.error('Original URL:', url);
+                alert('ไม่สามารถเปิดไฟล์ PDF ได้\nกรุณาลองเปิดไฟล์โดยตรงผ่านลิงก์ดาวน์โหลด');
+            }
         }
 
         btnPrev.addEventListener('click', async function(){ if(currentPage>1){ currentPage--; await renderPage(currentPage); } });
