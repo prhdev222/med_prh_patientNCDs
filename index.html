@@ -2755,29 +2755,44 @@
             
             <div class="info-box">
                 <h3>🔗 ลิงก์ความรู้และข่าวสารเพิ่มเติม</h3>
+                <p style="background: #e3f2fd; padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+                    📱 <strong>ผู้ใช้ LINE:</strong> หากไม่สามารถเปิด PDF ได้ กรุณากด "คัดลอกลิงก์" และเปิดในเบราว์เซอร์ (Chrome, Safari) แทนค่ะ
+                </p>
                 <div class="link-grid">
 					<div class="link-item">
 						<h4>📄 คู่มือเบาหวาน พ.ศ. 2566</h4>
 						<p>สรุปความรู้โรคเบาหวาน แนวทางดูแลตนเอง และข้อควรระวัง</p>
-						<a href="https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/DM2566-Ebook.pdf" class="external-link" target="_blank" rel="noopener">เปิดอ่านเอกสาร</a>
+						<div style="display: flex; gap: 8px; flex-wrap: wrap;">
+							<a href="https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/DM2566-Ebook.pdf" class="external-link" target="_blank" rel="noopener">เปิดอ่านเอกสาร</a>
+							<button onclick="copyLink('https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/DM2566-Ebook.pdf')" style="background: #2196F3; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px;">📋 คัดลอกลิงก์</button>
+						</div>
 					</div>
 
 					<div class="link-item">
 						<h4>🏃‍♀️ การออกกำลังกายเพื่อสุขภาพ</h4>
 						<p>แนวทางออกกำลังกายอย่างปลอดภัย เหมาะกับผู้ป่วย NCDs</p>
-						<a href="https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/exercise.pdf" class="external-link" target="_blank" rel="noopener">เปิดอ่านเอกสาร</a>
+						<div style="display: flex; gap: 8px; flex-wrap: wrap;">
+							<a href="https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/exercise.pdf" class="external-link" target="_blank" rel="noopener">เปิดอ่านเอกสาร</a>
+							<button onclick="copyLink('https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/exercise.pdf')" style="background: #2196F3; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px;">📋 คัดลอกลิงก์</button>
+						</div>
 					</div>
 
 					<div class="link-item">
 						<h4>📘 คู่มือสุขภาพพระสงฆ์อาพาธ</h4>
 						<p>ความรู้พื้นฐานการดูแลสุขภาพและป้องกันโรคไม่ติดต่อเรื้อรัง</p>
-						<a href="https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/manual-health.pdf" class="external-link" target="_blank" rel="noopener">เปิดอ่านเอกสาร</a>
+						<div style="display: flex; gap: 8px; flex-wrap: wrap;">
+							<a href="https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/manual-health.pdf" class="external-link" target="_blank" rel="noopener">เปิดอ่านเอกสาร</a>
+							<button onclick="copyLink('https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/manual-health.pdf')" style="background: #2196F3; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px;">📋 คัดลอกลิงก์</button>
+						</div>
 					</div>
 
 					<div class="link-item">
 						<h4>🛏️ การดูแลพระสงฆ์อาพาธระยะท้าย</h4>
 						<p>คำแนะนำหลักในการดูแลพระสงฆ์ที่เจ็บป่วยสำหรับผู้ดูแล</p>
-						<a href="https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/Care_for_sick_monks.pdf" class="external-link" target="_blank" rel="noopener">เปิดอ่านเอกสาร</a>
+						<div style="display: flex; gap: 8px; flex-wrap: wrap;">
+							<a href="https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/Care_for_sick_monks.pdf" class="external-link" target="_blank" rel="noopener">เปิดอ่านเอกสาร</a>
+							<button onclick="copyLink('https://github.com/prhdev222/med_prh_patientNCDs/raw/main/assets/pdfs/Care_for_sick_monks.pdf')" style="background: #2196F3; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px;">📋 คัดลอกลิงก์</button>
+						</div>
 					</div>
                     
                     <div class="link-item">
@@ -3711,6 +3726,23 @@
                 });
             });
         });
+
+        // Copy link functionality for LINE users
+        function copyLink(url) {
+            navigator.clipboard.writeText(url).then(function() {
+                alert('คัดลอกลิงก์แล้ว!\nกรุณาเปิดในเบราว์เซอร์ (Chrome, Safari) เพื่ออ่าน PDF');
+            }).catch(function(err) {
+                console.error('ไม่สามารถคัดลอกลิงก์ได้:', err);
+                // Fallback: select and copy manually
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('คัดลอกลิงก์แล้ว!\nกรุณาเปิดในเบราว์เซอร์ (Chrome, Safari) เพื่ออ่าน PDF');
+            });
+        }
     </script>
 </body>
 </html>
